@@ -140,12 +140,14 @@ export default function Page() {
   const [currentTheme, setCurrentTheme] = useState<keyof typeof themes>("default")
 
   useEffect(() => {
-    addOutput(
-      <TerminalOutput theme={themes[currentTheme]}>
-        Welcome to Chiziaruhoma's interactive resume! Type 'help' for available commands.
-      </TerminalOutput>,
-    )
-  }, [currentTheme]) // Added currentTheme to useEffect dependencies
+    if (output.length === 0) {
+      addOutput(
+        <TerminalOutput theme={themes[currentTheme]}>
+          Welcome to Chiziaruhoma's interactive resume! Type 'help' for available commands.
+        </TerminalOutput>,
+      )
+    }
+  }, [currentTheme, output.length])
 
   const addOutput = (newOutput: JSX.Element) => {
     setOutput((prev) => [...prev, newOutput])

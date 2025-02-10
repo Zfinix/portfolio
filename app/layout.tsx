@@ -9,8 +9,11 @@ const jetBrainsMono = JetBrains_Mono({ subsets: ["latin"] })
 const cascadiaCode = Cascadia_Code({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Chiziaruhoma Ogbonda - Senior Software Engineer",
-  description: "Interactive resume of Chiziaruhoma Ogbonda, Senior Software Engineer and Google Developer Expert",
+  title: "Chiziaruhoma's Terminal Resume",
+  description: "An interactive terminal-style resume",
+  icons: {
+    icon: '/favicon.png'  // This will look for the image in the public directory
+  }
 }
 
 export default function RootLayout({
