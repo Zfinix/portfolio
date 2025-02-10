@@ -9,7 +9,7 @@ const jetBrainsMono = JetBrains_Mono({ subsets: ["latin"] })
 const cascadiaCode = Cascadia_Code({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Chiziaruhoma's Terminal Resume",
+  title: "Chiziaruhoma Ogbonda",
   description: "An interactive terminal-style resume",
   icons: {
     icon: '/favicon.png'  // This will look for the image in the public directory
