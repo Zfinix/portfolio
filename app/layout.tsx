@@ -13,6 +13,23 @@ export const metadata: Metadata = {
   description: "An interactive terminal-style resume",
   icons: {
     icon: '/favicon.png'  // This will look for the image in the public directory
+  },
+  openGraph: {
+    title: "Chiziaruhoma Ogbonda",
+    description: "An interactive terminal-style resume",
+    type: "website",
+    images: [{
+      url: "/preview.png",
+      width: 1200,
+      height: 630,
+      alt: "Terminal style resume interface showing Chiziaruhoma Ogbonda's interactive resume"
+    }]
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Chiziaruhoma Ogbonda",
+    description: "An interactive terminal-style resume",
+    images: ["/preview.png"]
   }
 }
 
