@@ -79,7 +79,7 @@ export default function SupernotePrivacyPage() {
                 <p className="mb-4">Supernote is not intended for children under 13. We do not knowingly collect personally identifiable information from children under 13. If we discover that a child under 13 has provided us with personal information, we immediately delete this from our servers.</p>
                 
                 <h2 className="text-2xl font-semibold mt-8 mb-4">10. International Users</h2>
-                <p className="mb-4">Your data may be processed and stored in <strong>[Insert Hosting Country]</strong>. By using Supernote, you consent to this transfer and processing of your information.</p>
+                <p className="mb-4">Your data may be processed and stored in <strong>US</strong>. By using Supernote, you consent to this transfer and processing of your information.</p>
                 
                 <h2 className="text-2xl font-semibold mt-8 mb-4">11. Changes to This Privacy Policy</h2>
                 <p className="mb-4">We may update our Privacy Policy from time to time. We will notify users of significant changes via email or in-app notification and update the "Last Updated" date at the top of this policy.</p>
