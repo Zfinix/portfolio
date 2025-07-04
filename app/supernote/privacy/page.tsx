@@ -392,14 +392,14 @@ export default function SupernotePrivacyPage() {
                     <li><strong>Security Issues:</strong> <a href="mailto:security@supernote.app" className="text-blue-400 hover:text-blue-300">security@supernote.app</a></li>
                 </ul>
 
-                <p className="mb-4"><strong>Mailing Address:</strong></p>
+                {/* <p className="mb-4"><strong>Mailing Address:</strong></p>
                 <p className="mb-4">
                     SuperNote Technologies, Inc.<br/>
                     Privacy Department<br/>
                     [Address to be added]<br/>
                     [City, State, ZIP]<br/>
                     United States
-                </p>
+                </p> */}
 
                 <p className="mb-4">
                     We're committed to protecting your privacy and will respond to all privacy-related inquiries promptly. 
