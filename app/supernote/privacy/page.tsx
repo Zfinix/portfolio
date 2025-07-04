@@ -8,480 +8,407 @@ export const metadata: Metadata = {
 export default function SupernotePrivacyPage() {
     return (
         <div className="container mx-auto px-4 py-12 max-w-4xl text-white">
-            <h1 className="text-4xl font-bold mb-8 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">SuperNote Privacy Policy</h1>
+            <h1 className="text-3xl font-bold mb-8">SuperNote Privacy Policy</h1>
             
             <div className="prose prose-invert max-w-none">
-                <div className="bg-gray-800/50 p-6 rounded-lg mb-8">
-                    <p className="text-lg mb-2"><strong>Last Updated:</strong> {new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p>
-                    <p className="text-sm text-gray-300">We believe in transparency. This policy explains exactly how we handle your data when you use SuperNote.</p>
-                </div>
-                
-                <div className="bg-blue-900/20 border-l-4 border-blue-400 p-6 mb-8">
-                    <h2 className="text-xl font-semibold mb-3">📖 Quick Summary</h2>
-                    <ul className="list-disc pl-6 space-y-2 text-sm">
-                        <li>We use your data solely to provide SuperNote's AI-powered features</li>
-                        <li>Your notes and documents are encrypted and securely stored</li>
-                        <li>We never sell your personal data to third parties</li>
-                        <li>You have full control over your data and can delete it anytime</li>
-                        <li>AI processing is done securely with trusted providers (OpenAI, Google)</li>
-                    </ul>
-                </div>
+                <p className="mb-4"><strong>Last Updated:</strong> {new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p>
+                <p className="mb-6">This Privacy Policy explains how SuperNote collects, uses, and protects your information when you use our AI-powered note-taking application.</p>
 
-                <h2 className="text-2xl font-semibold mt-12 mb-6 border-b border-gray-600 pb-2">1. Introduction & Scope</h2>
-                <p className="mb-4">Welcome to <strong>SuperNote</strong>! We're committed to protecting your privacy and being transparent about how we collect, use, and safeguard your information.</p>
-                <p className="mb-4">This Privacy Policy applies to:</p>
-                <ul className="list-disc pl-6 mb-4 space-y-1">
-                    <li>The SuperNote mobile application (iOS and Android)</li>
-                    <li>Our website at supernote.app</li>
-                    <li>All related services and features</li>
+                <h2 className="text-2xl font-semibold mt-8 mb-4">Quick Summary</h2>
+                <ul className="list-disc pl-6 mb-6">
+                    <li>We collect minimal data needed to provide our AI-powered features</li>
+                    <li>Your notes and content remain private and are processed securely</li>
+                    <li>We use encryption and security measures to protect your data</li>
+                    <li>You have full control over your data and can delete it anytime</li>
+                    <li>We comply with GDPR, CCPA, and other privacy regulations</li>
                 </ul>
-                <p className="mb-4">By using SuperNote, you agree to this Privacy Policy. If you disagree with any part, please don't use our services.</p>
-                
-                <h2 className="text-2xl font-semibold mt-12 mb-6 border-b border-gray-600 pb-2">2. Information We Collect</h2>
-                
-                <h3 className="text-xl font-semibold mt-8 mb-4">📝 Information You Provide Directly</h3>
-                <div className="bg-gray-800/30 p-6 rounded-lg mb-6">
-                    <h4 className="font-semibold mb-3">Account Information:</h4>
-                    <ul className="list-disc pl-6 mb-4 space-y-1">
-                        <li><strong>Authentication Data:</strong> Email address, name (from Google/Apple/email sign-in)</li>
-                        <li><strong>Profile Information:</strong> Display name, profile preferences</li>
-                        <li><strong>Account Settings:</strong> App preferences, notification settings</li>
-                    </ul>
-                    
-                    <h4 className="font-semibold mb-3">Content You Create:</h4>
-                    <ul className="list-disc pl-6 mb-4 space-y-1">
-                        <li><strong>Documents:</strong> PDFs, Word documents, Google Docs, text files</li>
-                        <li><strong>Media Content:</strong> Video URLs (YouTube, TikTok), audio recordings</li>
-                        <li><strong>Notes & Text:</strong> Written notes, AI-generated summaries, quiz responses</li>
-                        <li><strong>Organizational Data:</strong> Folders, tags, note organization</li>
-                    </ul>
-                    
-                    <h4 className="font-semibold mb-3">Communication:</h4>
-                    <ul className="list-disc pl-6 space-y-1">
-                        <li>Support requests and feedback</li>
-                        <li>Survey responses and user research participation</li>
-                        <li>Community contributions (if applicable)</li>
-                    </ul>
-                </div>
-                
-                <h3 className="text-xl font-semibold mt-8 mb-4">📊 Automatically Collected Information</h3>
-                <div className="bg-gray-800/30 p-6 rounded-lg mb-6">
-                    <h4 className="font-semibold mb-3">Device & Technical Information:</h4>
-                    <ul className="list-disc pl-6 mb-4 space-y-1">
-                        <li>Device model, operating system, app version</li>
-                        <li>Unique device identifiers (advertising ID, device ID)</li>
-                        <li>Network information (IP address, connection type)</li>
-                        <li>Browser type and version (for web features)</li>
-                    </ul>
-                    
-                    <h4 className="font-semibold mb-3">Usage Analytics:</h4>
-                    <ul className="list-disc pl-6 mb-4 space-y-1">
-                        <li>Features used and frequency of use</li>
-                        <li>Time spent in different sections of the app</li>
-                        <li>User interaction patterns and navigation flows</li>
-                        <li>Performance metrics and loading times</li>
-                    </ul>
-                    
-                    <h4 className="font-semibold mb-3">Error & Diagnostic Data:</h4>
-                    <ul className="list-disc pl-6 space-y-1">
-                        <li>Crash reports and error logs</li>
-                        <li>Performance diagnostics</li>
-                        <li>Feature usage success/failure rates</li>
-                    </ul>
-                </div>
 
-                <h2 className="text-2xl font-semibold mt-12 mb-6 border-b border-gray-600 pb-2">3. How We Use Your Information</h2>
+                <h2 className="text-2xl font-semibold mt-8 mb-4">1. Information We Collect</h2>
                 
-                <div className="grid md:grid-cols-2 gap-6 mb-8">
-                    <div className="bg-green-900/20 border border-green-500/30 p-6 rounded-lg">
-                        <h3 className="text-lg font-semibold mb-3">🎯 Core App Functions</h3>
-                        <ul className="list-disc pl-6 space-y-1 text-sm">
-                            <li>Generate AI-powered notes and summaries</li>
-                            <li>Create interactive quizzes from content</li>
-                            <li>Sync content across your devices</li>
-                            <li>Organize and search your notes</li>
-                            <li>Provide personalized features</li>
-                        </ul>
-                    </div>
-                    
-                    <div className="bg-blue-900/20 border border-blue-500/30 p-6 rounded-lg">
-                        <h3 className="text-lg font-semibold mb-3">🛠 Service Improvement</h3>
-                        <ul className="list-disc pl-6 space-y-1 text-sm">
-                            <li>Analyze usage patterns to improve features</li>
-                            <li>Fix bugs and optimize performance</li>
-                            <li>Develop new AI capabilities</li>
-                            <li>Conduct A/B testing for better UX</li>
-                            <li>Prevent abuse and ensure security</li>
-                        </ul>
-                    </div>
-                    
-                    <div className="bg-purple-900/20 border border-purple-500/30 p-6 rounded-lg">
-                        <h3 className="text-lg font-semibold mb-3">💬 Communication</h3>
-                        <ul className="list-disc pl-6 space-y-1 text-sm">
-                            <li>Provide customer support</li>
-                            <li>Send important app updates</li>
-                            <li>Notify about new features</li>
-                            <li>Share tips and best practices</li>
-                            <li>Respond to feedback and inquiries</li>
-                        </ul>
-                    </div>
-                    
-                    <div className="bg-orange-900/20 border border-orange-500/30 p-6 rounded-lg">
-                        <h3 className="text-lg font-semibold mb-3">🔒 Security & Legal</h3>
-                        <ul className="list-disc pl-6 space-y-1 text-sm">
-                            <li>Detect and prevent fraud</li>
-                            <li>Enforce our terms of service</li>
-                            <li>Comply with legal obligations</li>
-                            <li>Protect user safety and privacy</li>
-                            <li>Respond to legal requests</li>
-                        </ul>
-                    </div>
-                </div>
+                <p className="mb-4"><strong>Account Information:</strong></p>
+                <ul className="list-disc pl-6 mb-4">
+                    <li>Email address for account creation and communication</li>
+                    <li>Name (optional) for personalization</li>
+                    <li>Profile picture (optional)</li>
+                    <li>Authentication credentials (encrypted)</li>
+                </ul>
 
-                <h2 className="text-2xl font-semibold mt-12 mb-6 border-b border-gray-600 pb-2">4. AI Processing & Third-Party Services</h2>
-                
-                <div className="bg-yellow-900/20 border-l-4 border-yellow-400 p-6 mb-6">
-                    <h3 className="text-lg font-semibold mb-3">🤖 How AI Processing Works</h3>
-                    <p className="mb-4">When you use SuperNote's AI features, your content may be securely processed by these trusted AI providers:</p>
-                    <ul className="list-disc pl-6 mb-4 space-y-2">
-                        <li><strong>OpenAI (GPT models):</strong> For text summarization, note generation, and quiz creation</li>
-                        <li><strong>Google AI:</strong> For document analysis and content understanding</li>
-                        <li><strong>ElevenLabs:</strong> For text-to-speech features (if enabled)</li>
-                        <li><strong>Deepgram:</strong> For audio transcription services</li>
-                    </ul>
-                    
-                    <div className="bg-gray-800/50 p-4 rounded mt-4">
-                        <h4 className="font-semibold mb-2">🛡️ AI Data Protection:</h4>
-                        <ul className="list-disc pl-6 space-y-1 text-sm">
-                            <li>Data is encrypted during transmission (TLS 1.3)</li>
-                            <li>We don't use your data to train third-party AI models</li>
-                            <li>AI providers process data temporarily and don't store it</li>
-                            <li>Content is anonymized before AI processing when possible</li>
-                            <li>You can opt out of AI features anytime in settings</li>
-                        </ul>
-                    </div>
-                </div>
+                <p className="mb-4"><strong>Content You Create:</strong></p>
+                <ul className="list-disc pl-6 mb-4">
+                    <li>Notes, documents, and text content you input</li>
+                    <li>Voice recordings and audio files you upload</li>
+                    <li>Videos and multimedia content you process</li>
+                    <li>Files and documents you import (PDFs, Word docs, etc.)</li>
+                    <li>Quiz questions and study materials you generate</li>
+                </ul>
 
-                <h2 className="text-2xl font-semibold mt-12 mb-6 border-b border-gray-600 pb-2">5. Data Sharing & Disclosure</h2>
-                
-                <div className="bg-red-900/20 border border-red-500/30 p-6 rounded-lg mb-6">
-                    <h3 className="text-lg font-semibold mb-3">❌ We DO NOT:</h3>
-                    <ul className="list-disc pl-6 space-y-1">
-                        <li>Sell your personal data to anyone</li>
-                        <li>Share your notes or documents with other users</li>
-                        <li>Use your data for advertising targeting</li>
-                        <li>Provide data to data brokers or marketers</li>
-                    </ul>
-                </div>
-                
-                <div className="bg-gray-800/30 p-6 rounded-lg mb-6">
-                    <h3 className="text-lg font-semibold mb-3">✅ We MAY share data with:</h3>
-                    <ul className="list-disc pl-6 space-y-2">
-                        <li><strong>Cloud Infrastructure:</strong> Supabase (database), AWS/Google Cloud (hosting)</li>
-                        <li><strong>AI Processing:</strong> OpenAI, Google AI (temporary processing only)</li>
-                        <li><strong>Analytics:</strong> Aggregate usage data with privacy-focused tools</li>
-                        <li><strong>Payment Processing:</strong> Stripe, App Store, Google Play (subscription data)</li>
-                        <li><strong>Customer Support:</strong> Zendesk or similar (support conversations only)</li>
-                        <li><strong>Legal Requirements:</strong> Law enforcement (only when legally required)</li>
-                    </ul>
-                </div>
+                <p className="mb-4"><strong>Usage Information:</strong></p>
+                <ul className="list-disc pl-6 mb-4">
+                    <li>How you use the app (features accessed, time spent)</li>
+                    <li>Device information (OS version, device type)</li>
+                    <li>App performance data and crash reports</li>
+                    <li>Preferences and settings you configure</li>
+                </ul>
 
-                <h2 className="text-2xl font-semibold mt-12 mb-6 border-b border-gray-600 pb-2">6. Data Security</h2>
-                
-                <div className="grid md:grid-cols-2 gap-6 mb-8">
-                    <div className="bg-gray-800/30 p-6 rounded-lg">
-                        <h3 className="text-lg font-semibold mb-3">🔐 Encryption</h3>
-                        <ul className="list-disc pl-6 space-y-1 text-sm">
-                            <li>AES-256 encryption at rest</li>
-                            <li>TLS 1.3 for data in transit</li>
-                            <li>End-to-end encryption for sensitive notes</li>
-                            <li>Encrypted database backups</li>
-                        </ul>
-                    </div>
-                    
-                    <div className="bg-gray-800/30 p-6 rounded-lg">
-                        <h3 className="text-lg font-semibold mb-3">🔒 Access Control</h3>
-                        <ul className="list-disc pl-6 space-y-1 text-sm">
-                            <li>Multi-factor authentication for staff</li>
-                            <li>Role-based access permissions</li>
-                            <li>Regular access audits</li>
-                            <li>Principle of least privilege</li>
-                        </ul>
-                    </div>
-                    
-                    <div className="bg-gray-800/30 p-6 rounded-lg">
-                        <h3 className="text-lg font-semibold mb-3">🛡️ Infrastructure</h3>
-                        <ul className="list-disc pl-6 space-y-1 text-sm">
-                            <li>SOC 2 compliant cloud providers</li>
-                            <li>Regular security audits</li>
-                            <li>Automated threat detection</li>
-                            <li>Secure development practices</li>
-                        </ul>
-                    </div>
-                    
-                    <div className="bg-gray-800/30 p-6 rounded-lg">
-                        <h3 className="text-lg font-semibold mb-3">📋 Monitoring</h3>
-                        <ul className="list-disc pl-6 space-y-1 text-sm">
-                            <li>24/7 security monitoring</li>
-                            <li>Incident response procedures</li>
-                            <li>Regular vulnerability scanning</li>
-                            <li>Employee security training</li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <div className="bg-red-900/20 border-l-4 border-red-400 p-6 mb-8">
-                    <p className="text-sm"><strong>Important:</strong> While we implement industry-standard security measures, no system is 100% secure. We continuously work to protect your data and will notify you of any significant security incidents as required by law.</p>
-                </div>
+                <p className="mb-4"><strong>Technical Data:</strong></p>
+                <ul className="list-disc pl-6 mb-4">
+                    <li>IP address (anonymized for analytics)</li>
+                    <li>Session data and authentication tokens</li>
+                    <li>App version and update information</li>
+                    <li>Error logs and diagnostic data</li>
+                </ul>
 
-                <h2 className="text-2xl font-semibold mt-12 mb-6 border-b border-gray-600 pb-2">7. Your Privacy Rights</h2>
+                <h2 className="text-2xl font-semibold mt-8 mb-4">2. How We Use Your Information</h2>
                 
-                <div className="bg-blue-900/20 p-6 rounded-lg mb-6">
-                    <h3 className="text-lg font-semibold mb-4">🌍 Universal Rights (All Users)</h3>
-                    <div className="grid md:grid-cols-2 gap-4">
-                        <div>
-                            <h4 className="font-semibold mb-2">📋 Access & Portability</h4>
-                            <ul className="list-disc pl-6 space-y-1 text-sm">
-                                <li>View all data we have about you</li>
-                                <li>Export your notes and documents</li>
-                                <li>Receive data in machine-readable format</li>
-                            </ul>
-                        </div>
-                        
-                        <div>
-                            <h4 className="font-semibold mb-2">✏️ Correction & Updates</h4>
-                            <ul className="list-disc pl-6 space-y-1 text-sm">
-                                <li>Update your account information</li>
-                                <li>Correct inaccurate data</li>
-                                <li>Modify privacy preferences</li>
-                            </ul>
-                        </div>
-                        
-                        <div>
-                            <h4 className="font-semibold mb-2">🗑️ Deletion</h4>
-                            <ul className="list-disc pl-6 space-y-1 text-sm">
-                                <li>Delete individual notes or documents</li>
-                                <li>Request full account deletion</li>
-                                <li>Remove data from AI processing</li>
-                            </ul>
-                        </div>
-                        
-                        <div>
-                            <h4 className="font-semibold mb-2">⚙️ Control</h4>
-                            <ul className="list-disc pl-6 space-y-1 text-sm">
-                                <li>Opt out of analytics collection</li>
-                                <li>Disable AI processing features</li>
-                                <li>Control notification preferences</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                
-                <div className="bg-purple-900/20 p-6 rounded-lg mb-6">
-                    <h3 className="text-lg font-semibold mb-3">📍 Additional Rights by Region</h3>
-                    
-                    <h4 className="font-semibold mb-2">🇪🇺 GDPR (European Users)</h4>
-                    <ul className="list-disc pl-6 mb-4 space-y-1 text-sm">
-                        <li>Right to object to processing for legitimate interests</li>
-                        <li>Right to restrict processing in certain circumstances</li>
-                        <li>Right to lodge complaints with supervisory authorities</li>
-                        <li>Explicit consent for AI processing (can be withdrawn anytime)</li>
-                    </ul>
-                    
-                    <h4 className="font-semibold mb-2">🇺🇸 CCPA (California Users)</h4>
-                    <ul className="list-disc pl-6 space-y-1 text-sm">
-                        <li>Right to know what personal information is collected</li>
-                        <li>Right to opt-out of sale (we don't sell data)</li>
-                        <li>Right to non-discrimination for exercising CCPA rights</li>
-                        <li>Enhanced deletion and access rights</li>
-                    </ul>
-                </div>
-                
-                <div className="bg-green-900/20 border border-green-500/30 p-6 rounded-lg mb-8">
-                    <h3 className="text-lg font-semibold mb-3">📞 How to Exercise Your Rights</h3>
-                    <p className="mb-3">To exercise any of these rights, contact us at:</p>
-                    <ul className="space-y-2">
-                        <li><strong>Email:</strong> <a href="mailto:privacy@supernote.app" className="text-blue-400 hover:text-blue-300">privacy@supernote.app</a></li>
-                        <li><strong>In-App:</strong> Settings → Privacy → Data Rights</li>
-                        <li><strong>Response Time:</strong> Within 30 days (or as required by local law)</li>
-                    </ul>
-                </div>
+                <p className="mb-4"><strong>Core Service Delivery:</strong></p>
+                <ul className="list-disc pl-6 mb-4">
+                    <li>Process your content through AI to generate notes and summaries</li>
+                    <li>Sync your data across your devices</li>
+                    <li>Provide transcription and text-to-speech services</li>
+                    <li>Generate quizzes and study materials from your content</li>
+                    <li>Backup and restore your data</li>
+                </ul>
 
-                <h2 className="text-2xl font-semibold mt-12 mb-6 border-b border-gray-600 pb-2">8. Data Retention</h2>
-                
-                <div className="bg-gray-800/30 p-6 rounded-lg mb-6">
-                    <h3 className="text-lg font-semibold mb-4">⏰ How Long We Keep Your Data</h3>
-                    
-                    <div className="space-y-4">
-                        <div>
-                            <h4 className="font-semibold mb-2">📝 Active Account Data</h4>
-                            <p className="text-sm mb-2">Retained as long as your account is active or as needed to provide services.</p>
-                            <ul className="list-disc pl-6 space-y-1 text-sm">
-                                <li>Notes and documents: Until you delete them or close your account</li>
-                                <li>Account information: Until account closure + 30 days</li>
-                                <li>Usage analytics: 24 months (aggregated/anonymized)</li>
-                            </ul>
-                        </div>
-                        
-                        <div>
-                            <h4 className="font-semibold mb-2">🗑️ After Account Deletion</h4>
-                            <ul className="list-disc pl-6 space-y-1 text-sm">
-                                <li>Personal data: Deleted within 30 days</li>
-                                <li>Backup copies: Deleted within 90 days</li>
-                                <li>Legal/fraud prevention: Up to 7 years (anonymized)</li>
-                                <li>Aggregated analytics: May be retained (non-identifiable)</li>
-                            </ul>
-                        </div>
-                        
-                        <div>
-                            <h4 className="font-semibold mb-2">📋 Legal Requirements</h4>
-                            <p className="text-sm">Some data may be retained longer for:</p>
-                            <ul className="list-disc pl-6 space-y-1 text-sm">
-                                <li>Tax and accounting purposes (7 years)</li>
-                                <li>Legal disputes or investigations</li>
-                                <li>Regulatory compliance requirements</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+                <p className="mb-4"><strong>AI Processing:</strong></p>
+                <ul className="list-disc pl-6 mb-4">
+                    <li>Send content to AI providers (OpenAI, Google, ElevenLabs) for processing</li>
+                    <li>Analyze documents and media to extract key information</li>
+                    <li>Generate summaries, notes, and quiz questions</li>
+                    <li>Improve transcription accuracy over time</li>
+                </ul>
 
-                <h2 className="text-2xl font-semibold mt-12 mb-6 border-b border-gray-600 pb-2">9. Children's Privacy</h2>
-                
-                <div className="bg-yellow-900/20 border-l-4 border-yellow-400 p-6 mb-8">
-                    <h3 className="text-lg font-semibold mb-3">👶 Age Requirements</h3>
-                    <p className="mb-4">SuperNote is not intended for children under 13 years old (or 16 in the EU). We do not knowingly collect personal information from children under these ages.</p>
-                    
-                    <h4 className="font-semibold mb-2">If we discover a child's account:</h4>
-                    <ul className="list-disc pl-6 space-y-1 text-sm">
-                        <li>We immediately delete their personal information</li>
-                        <li>We remove their account from our systems</li>
-                        <li>We notify the child to stop using our services</li>
-                        <li>Parents can contact us to request information deletion</li>
-                    </ul>
-                    
-                    <p className="text-sm mt-4"><strong>Parents:</strong> If you believe your child has created an account, please contact us immediately at <a href="mailto:privacy@supernote.app" className="text-blue-400">privacy@supernote.app</a></p>
-                </div>
+                <p className="mb-4"><strong>Product Improvement:</strong></p>
+                <ul className="list-disc pl-6 mb-4">
+                    <li>Analyze usage patterns to improve features</li>
+                    <li>Fix bugs and enhance performance</li>
+                    <li>Develop new AI capabilities</li>
+                    <li>Optimize user experience</li>
+                </ul>
 
-                <h2 className="text-2xl font-semibold mt-12 mb-6 border-b border-gray-600 pb-2">10. International Data Transfers</h2>
-                
-                <div className="bg-gray-800/30 p-6 rounded-lg mb-8">
-                    <h3 className="text-lg font-semibold mb-4">🌐 Global Operations</h3>
-                    <p className="mb-4">SuperNote operates globally, and your data may be processed in:</p>
-                    
-                    <ul className="list-disc pl-6 mb-4 space-y-1">
-                        <li><strong>Primary Location:</strong> United States (AWS US-East)</li>
-                        <li><strong>Backup Locations:</strong> EU (for EU users), Canada</li>
-                        <li><strong>AI Processing:</strong> US and EU data centers (encrypted)</li>
-                    </ul>
-                    
-                    <h4 className="font-semibold mb-2">🛡️ Transfer Safeguards:</h4>
-                    <ul className="list-disc pl-6 space-y-1 text-sm">
-                        <li>Standard Contractual Clauses (SCCs) for EU data</li>
-                        <li>Adequacy decisions where available</li>
-                        <li>Data Processing Agreements with all vendors</li>
-                        <li>Regular compliance audits</li>
-                    </ul>
-                </div>
+                <p className="mb-4"><strong>Communication:</strong></p>
+                <ul className="list-disc pl-6 mb-4">
+                    <li>Send important service updates</li>
+                    <li>Provide customer support</li>
+                    <li>Notify about new features (with your consent)</li>
+                    <li>Send security alerts when necessary</li>
+                </ul>
 
-                <h2 className="text-2xl font-semibold mt-12 mb-6 border-b border-gray-600 pb-2">11. Cookies & Tracking</h2>
+                <h2 className="text-2xl font-semibold mt-8 mb-4">3. AI Processing & Third-Party Services</h2>
                 
-                <div className="bg-gray-800/30 p-6 rounded-lg mb-8">
-                    <h3 className="text-lg font-semibold mb-4">🍪 How We Use Cookies</h3>
-                    
-                    <div className="space-y-4">
-                        <div>
-                            <h4 className="font-semibold mb-2">Essential Cookies (Always Active)</h4>
-                            <ul className="list-disc pl-6 space-y-1 text-sm">
-                                <li>Authentication and session management</li>
-                                <li>Security and fraud prevention</li>
-                                <li>Core app functionality</li>
-                            </ul>
-                        </div>
-                        
-                        <div>
-                            <h4 className="font-semibold mb-2">Analytics Cookies (Opt-in)</h4>
-                            <ul className="list-disc pl-6 space-y-1 text-sm">
-                                <li>Usage patterns and feature adoption</li>
-                                <li>Performance monitoring</li>
-                                <li>Error tracking and debugging</li>
-                            </ul>
-                        </div>
-                        
-                        <div>
-                            <h4 className="font-semibold mb-2">Preference Cookies</h4>
-                            <ul className="list-disc pl-6 space-y-1 text-sm">
-                                <li>UI customization settings</li>
-                                <li>Language and region preferences</li>
-                                <li>Accessibility options</li>
-                            </ul>
-                        </div>
-                    </div>
-                    
-                    <p className="text-sm mt-4"><strong>Control:</strong> You can manage cookie preferences in Settings → Privacy → Cookies or through your browser settings.</p>
-                </div>
+                <p className="mb-4">SuperNote uses third-party AI services to enhance your experience. Here's how we protect your data during AI processing:</p>
 
-                <h2 className="text-2xl font-semibold mt-12 mb-6 border-b border-gray-600 pb-2">12. Changes to This Privacy Policy</h2>
-                
-                <div className="bg-blue-900/20 p-6 rounded-lg mb-8">
-                    <h3 className="text-lg font-semibold mb-3">📄 Policy Updates</h3>
-                    <p className="mb-4">We may update this Privacy Policy to reflect changes in our practices, services, or legal requirements. When we do:</p>
-                    
-                    <ul className="list-disc pl-6 mb-4 space-y-1">
-                        <li><strong>Minor Changes:</strong> Updated "Last Modified" date</li>
-                        <li><strong>Material Changes:</strong> Email notification + in-app notice</li>
-                        <li><strong>Continued Use:</strong> Constitutes acceptance of new terms</li>
-                        <li><strong>Objection:</strong> You can delete your account if you disagree</li>
-                    </ul>
-                    
-                    <p className="text-sm"><strong>Version History:</strong> Previous versions available upon request for transparency.</p>
-                </div>
+                <p className="mb-4"><strong>AI Service Providers:</strong></p>
+                <ul className="list-disc pl-6 mb-4">
+                    <li><strong>OpenAI:</strong> Text generation, summarization, and content analysis</li>
+                    <li><strong>Google AI:</strong> Document processing and natural language understanding</li>
+                    <li><strong>ElevenLabs:</strong> Text-to-speech conversion</li>
+                    <li><strong>Deepgram:</strong> Audio transcription services</li>
+                    <li><strong>Anthropic:</strong> Advanced text processing and analysis</li>
+                </ul>
 
-                <h2 className="text-2xl font-semibold mt-12 mb-6 border-b border-gray-600 pb-2">13. Contact Information</h2>
+                <p className="mb-4"><strong>Data Protection During AI Processing:</strong></p>
+                <ul className="list-disc pl-6 mb-4">
+                    <li>Data is encrypted in transit to AI providers</li>
+                    <li>We use enterprise-grade API access with enhanced privacy</li>
+                    <li>Personal identifiers are removed before processing when possible</li>
+                    <li>AI providers are contractually bound to protect your data</li>
+                    <li>Processed data is not used to train third-party AI models</li>
+                </ul>
+
+                <p className="mb-4"><strong>What Data We Share with AI Services:</strong></p>
+                <ul className="list-disc pl-6 mb-4">
+                    <li>Content you explicitly request to be processed (notes, documents, audio)</li>
+                    <li>Context necessary for accurate AI responses</li>
+                    <li>No personal account information or unnecessary metadata</li>
+                    <li>No data from other users or unrelated content</li>
+                </ul>
+
+                <h2 className="text-2xl font-semibold mt-8 mb-4">4. Data Security & Protection</h2>
                 
-                <div className="bg-green-900/20 border border-green-500/30 p-6 rounded-lg mb-8">
-                    <h3 className="text-lg font-semibold mb-4">📞 Get in Touch</h3>
-                    
-                    <div className="grid md:grid-cols-2 gap-6">
-                        <div>
-                            <h4 className="font-semibold mb-2">General Inquiries</h4>
-                            <ul className="space-y-1 text-sm">
-                                <li><strong>Email:</strong> <a href="mailto:support@supernote.app" className="text-blue-400 hover:text-blue-300">support@supernote.app</a></li>
-                                <li><strong>Website:</strong> <a href="https://supernote.app" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300">supernote.app</a></li>
-                                <li><strong>In-App:</strong> Settings → Help & Support</li>
-                            </ul>
-                        </div>
-                        
-                        <div>
-                            <h4 className="font-semibold mb-2">Privacy-Specific</h4>
-                            <ul className="space-y-1 text-sm">
-                                <li><strong>Privacy Officer:</strong> <a href="mailto:privacy@supernote.app" className="text-blue-400 hover:text-blue-300">privacy@supernote.app</a></li>
-                                <li><strong>Data Requests:</strong> Settings → Privacy → Data Rights</li>
-                                <li><strong>GDPR Complaints:</strong> Your local supervisory authority</li>
-                            </ul>
-                        </div>
-                    </div>
-                    
-                    <div className="mt-6 pt-4 border-t border-gray-600">
-                        <p className="text-sm text-gray-300">
-                            <strong>Response Times:</strong> General inquiries (24-48 hours), Privacy requests (within 30 days), Security issues (immediate priority)
-                        </p>
-                    </div>
-                </div>
+                <p className="mb-4"><strong>Encryption:</strong></p>
+                <ul className="list-disc pl-6 mb-4">
+                    <li>All data encrypted in transit using TLS 1.3</li>
+                    <li>Data encrypted at rest using AES-256</li>
+                    <li>Database encryption with rotating keys</li>
+                    <li>End-to-end encryption for sensitive content</li>
+                </ul>
+
+                <p className="mb-4"><strong>Access Controls:</strong></p>
+                <ul className="list-disc pl-6 mb-4">
+                    <li>Multi-factor authentication for admin access</li>
+                    <li>Principle of least privilege for staff</li>
+                    <li>Regular access reviews and audit logs</li>
+                    <li>Secure development practices</li>
+                </ul>
+
+                <p className="mb-4"><strong>Infrastructure Security:</strong></p>
+                <ul className="list-disc pl-6 mb-4">
+                    <li>Cloud infrastructure with enterprise-grade security</li>
+                    <li>Regular security audits and penetration testing</li>
+                    <li>Automated vulnerability scanning</li>
+                    <li>Incident response and monitoring systems</li>
+                </ul>
+
+                <p className="mb-4"><strong>Data Backup & Recovery:</strong></p>
+                <ul className="list-disc pl-6 mb-4">
+                    <li>Automated daily backups with encryption</li>
+                    <li>Geographic distribution of backup data</li>
+                    <li>Regular backup integrity testing</li>
+                    <li>Disaster recovery procedures</li>
+                </ul>
+
+                <h2 className="text-2xl font-semibold mt-8 mb-4">5. Data Sharing & Disclosure</h2>
                 
-                <div className="bg-gray-800/50 p-6 rounded-lg text-center">
-                    <h3 className="text-lg font-semibold mb-3">🤝 Our Commitment</h3>
-                    <p className="text-sm text-gray-300 mb-4">
-                        We're committed to protecting your privacy and being transparent about our data practices. 
-                        This policy reflects our values of trust, security, and user empowerment.
-                    </p>
-                    <p className="text-xs text-gray-400">
-                        Thank you for trusting SuperNote with your data. We don't take that responsibility lightly.
-                    </p>
-                </div>
+                <p className="mb-4">We do not sell your personal data. We only share data in these limited circumstances:</p>
+
+                <p className="mb-4"><strong>Service Providers:</strong></p>
+                <ul className="list-disc pl-6 mb-4">
+                    <li>AI processing services (OpenAI, Google, etc.) for core functionality</li>
+                    <li>Cloud hosting providers (with data processing agreements)</li>
+                    <li>Analytics services (with data minimization)</li>
+                    <li>Customer support platforms (only support-related data)</li>
+                </ul>
+
+                <p className="mb-4"><strong>Legal Requirements:</strong></p>
+                <ul className="list-disc pl-6 mb-4">
+                    <li>Court orders or legal process</li>
+                    <li>Compliance with applicable laws</li>
+                    <li>Protection of our legal rights</li>
+                    <li>Prevention of illegal activities</li>
+                </ul>
+
+                <p className="mb-4"><strong>Business Transfers:</strong></p>
+                <ul className="list-disc pl-6 mb-4">
+                    <li>Mergers or acquisitions (with continued privacy protection)</li>
+                    <li>Asset sales (data protection obligations transfer)</li>
+                    <li>Corporate restructuring</li>
+                </ul>
+
+                <p className="mb-4"><strong>With Your Consent:</strong></p>
+                <ul className="list-disc pl-6 mb-4">
+                    <li>Sharing with third-party integrations you enable</li>
+                    <li>Participation in research studies (anonymized)</li>
+                    <li>Testimonials or case studies (with explicit permission)</li>
+                </ul>
+
+                <h2 className="text-2xl font-semibold mt-8 mb-4">6. Data Retention</h2>
+                
+                <p className="mb-4"><strong>Account Data:</strong></p>
+                <ul className="list-disc pl-6 mb-4">
+                    <li>Retained while your account is active</li>
+                    <li>Deleted within 30 days of account deletion</li>
+                    <li>Some data may be retained for legal compliance (anonymized)</li>
+                </ul>
+
+                <p className="mb-4"><strong>Content Data:</strong></p>
+                <ul className="list-disc pl-6 mb-4">
+                    <li>Notes and documents retained while account is active</li>
+                    <li>Immediately deleted when you delete specific content</li>
+                    <li>Backups purged within 90 days of deletion</li>
+                </ul>
+
+                <p className="mb-4"><strong>Analytics Data:</strong></p>
+                <ul className="list-disc pl-6 mb-4">
+                    <li>Aggregated usage data retained for 2 years</li>
+                    <li>Individual usage data deleted after 1 year</li>
+                    <li>Error logs and diagnostics deleted after 6 months</li>
+                </ul>
+
+                <p className="mb-4"><strong>Legal & Security Data:</strong></p>
+                <ul className="list-disc pl-6 mb-4">
+                    <li>Security logs retained for 1 year</li>
+                    <li>Legal compliance records as required by law</li>
+                    <li>Fraud prevention data for legitimate business purposes</li>
+                </ul>
+
+                <h2 className="text-2xl font-semibold mt-8 mb-4">7. Your Privacy Rights</h2>
+                
+                <p className="mb-4"><strong>Access & Portability:</strong></p>
+                <ul className="list-disc pl-6 mb-4">
+                    <li>View all data we have about you</li>
+                    <li>Download your data in portable formats</li>
+                    <li>Export notes, documents, and content</li>
+                    <li>Receive data transfer within 30 days</li>
+                </ul>
+
+                <p className="mb-4"><strong>Correction & Updates:</strong></p>
+                <ul className="list-disc pl-6 mb-4">
+                    <li>Edit your profile and account information</li>
+                    <li>Update preferences and settings</li>
+                    <li>Correct inaccurate personal data</li>
+                    <li>Request data corrections</li>
+                </ul>
+
+                <p className="mb-4"><strong>Deletion & Removal:</strong></p>
+                <ul className="list-disc pl-6 mb-4">
+                    <li>Delete specific notes or content</li>
+                    <li>Delete your entire account and all data</li>
+                    <li>Request removal of specific information</li>
+                    <li>Opt out of data processing (where legally required)</li>
+                </ul>
+
+                <p className="mb-4"><strong>Control & Preferences:</strong></p>
+                <ul className="list-disc pl-6 mb-4">
+                    <li>Control email notifications and communications</li>
+                    <li>Manage data sharing preferences</li>
+                    <li>Opt out of analytics (where possible)</li>
+                    <li>Choose AI processing preferences</li>
+                </ul>
+
+                <h2 className="text-2xl font-semibold mt-8 mb-4">8. Regional Privacy Rights</h2>
+                
+                <p className="mb-4"><strong>GDPR Rights (EU/UK):</strong></p>
+                <ul className="list-disc pl-6 mb-4">
+                    <li>Right to be informed about data processing</li>
+                    <li>Right of access to your personal data</li>
+                    <li>Right to rectification of inaccurate data</li>
+                    <li>Right to erasure ("right to be forgotten")</li>
+                    <li>Right to restrict processing in certain circumstances</li>
+                    <li>Right to data portability</li>
+                    <li>Right to object to processing</li>
+                    <li>Rights related to automated decision making</li>
+                </ul>
+
+                <p className="mb-4"><strong>CCPA Rights (California):</strong></p>
+                <ul className="list-disc pl-6 mb-4">
+                    <li>Right to know what personal information is collected</li>
+                    <li>Right to delete personal information</li>
+                    <li>Right to opt-out of sale (we don't sell data)</li>
+                    <li>Right to non-discrimination for exercising privacy rights</li>
+                </ul>
+
+                <p className="mb-4"><strong>Other Regional Rights:</strong></p>
+                <ul className="list-disc pl-6 mb-4">
+                    <li>Compliance with applicable local privacy laws</li>
+                    <li>Data localization where required</li>
+                    <li>Specific consent mechanisms as needed</li>
+                </ul>
+
+                <h2 className="text-2xl font-semibold mt-8 mb-4">9. Children's Privacy</h2>
+                
+                <p className="mb-4">SuperNote is not intended for children under 13 (or 16 in the EU). We do not knowingly collect personal information from children.</p>
+
+                <p className="mb-4"><strong>If we discover we have collected information from a child:</strong></p>
+                <ul className="list-disc pl-6 mb-4">
+                    <li>We will delete the information immediately</li>
+                    <li>We will notify parents/guardians if possible</li>
+                    <li>We will terminate the account</li>
+                    <li>We will review our processes to prevent future occurrences</li>
+                </ul>
+
+                <p className="mb-4"><strong>Parents and guardians:</strong></p>
+                <ul className="list-disc pl-6 mb-4">
+                    <li>Can contact us to review any information we may have</li>
+                    <li>Can request deletion of their child's information</li>
+                    <li>Can refuse further collection or use of information</li>
+                </ul>
+
+                <h2 className="text-2xl font-semibold mt-8 mb-4">10. International Data Transfers</h2>
+                
+                <p className="mb-4">SuperNote operates globally and may transfer data internationally. We ensure adequate protection through:</p>
+
+                <p className="mb-4"><strong>Transfer Mechanisms:</strong></p>
+                <ul className="list-disc pl-6 mb-4">
+                    <li>Standard Contractual Clauses (SCCs) for EU transfers</li>
+                    <li>Adequacy decisions where available</li>
+                    <li>Binding Corporate Rules for internal transfers</li>
+                    <li>Explicit consent where required</li>
+                </ul>
+
+                <p className="mb-4"><strong>Data Protection Measures:</strong></p>
+                <ul className="list-disc pl-6 mb-4">
+                    <li>Technical safeguards (encryption, access controls)</li>
+                    <li>Organizational measures (policies, training)</li>
+                    <li>Legal protections (contracts, compliance)</li>
+                    <li>Regular assessments of transfer risks</li>
+                </ul>
+
+                <h2 className="text-2xl font-semibold mt-8 mb-4">11. Cookies & Tracking</h2>
+                
+                <p className="mb-4"><strong>Essential Cookies:</strong></p>
+                <ul className="list-disc pl-6 mb-4">
+                    <li>Authentication and session management</li>
+                    <li>Security and fraud prevention</li>
+                    <li>Core app functionality</li>
+                    <li>User preferences and settings</li>
+                </ul>
+
+                <p className="mb-4"><strong>Analytics Cookies:</strong></p>
+                <ul className="list-disc pl-6 mb-4">
+                    <li>Usage statistics (anonymized)</li>
+                    <li>Performance monitoring</li>
+                    <li>Feature usage analysis</li>
+                    <li>Error tracking and debugging</li>
+                </ul>
+
+                <p className="mb-4"><strong>Cookie Management:</strong></p>
+                <ul className="list-disc pl-6 mb-4">
+                    <li>You can control cookies through browser settings</li>
+                    <li>Essential cookies cannot be disabled without affecting functionality</li>
+                    <li>Analytics cookies can be opted out</li>
+                    <li>We respect Do Not Track signals where possible</li>
+                </ul>
+
+                <h2 className="text-2xl font-semibold mt-8 mb-4">12. Privacy Policy Updates</h2>
+                
+                <p className="mb-4">We may update this Privacy Policy to reflect changes in our practices or legal requirements.</p>
+
+                <p className="mb-4"><strong>How we notify you of changes:</strong></p>
+                <ul className="list-disc pl-6 mb-4">
+                    <li><strong>Material Changes:</strong> Email notification 30 days in advance</li>
+                    <li><strong>Minor Changes:</strong> Updated "Last Modified" date</li>
+                    <li><strong>In-App Notice:</strong> Notification within the app</li>
+                    <li><strong>Website Notice:</strong> Banner on our website</li>
+                </ul>
+
+                <p className="mb-4"><strong>Your choices after changes:</strong></p>
+                <ul className="list-disc pl-6 mb-4">
+                    <li>Continue using the service (indicates acceptance)</li>
+                    <li>Delete your account if you disagree with changes</li>
+                    <li>Contact us with questions or concerns</li>
+                    <li>Exercise your data rights before policy takes effect</li>
+                </ul>
+
+                <h2 className="text-2xl font-semibold mt-8 mb-4">13. Contact Us</h2>
+                
+                <p className="mb-4"><strong>Privacy-Related Questions:</strong></p>
+                <ul className="mb-4">
+                    <li><strong>Email:</strong> <a href="mailto:privacy@supernote.app" className="text-blue-400 hover:text-blue-300">privacy@supernote.app</a></li>
+                    <li><strong>Response Time:</strong> Within 72 hours</li>
+                    <li><strong>Data Protection Officer:</strong> <a href="mailto:dpo@supernote.app" className="text-blue-400 hover:text-blue-300">dpo@supernote.app</a></li>
+                </ul>
+
+                <p className="mb-4"><strong>General Support:</strong></p>
+                <ul className="mb-4">
+                    <li><strong>Email:</strong> <a href="mailto:support@supernote.app" className="text-blue-400 hover:text-blue-300">support@supernote.app</a></li>
+                    <li><strong>In-App Help:</strong> Settings → Help & Privacy</li>
+                    <li><strong>Website:</strong> <a href="https://supernote.app/privacy" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300">supernote.app/privacy</a></li>
+                </ul>
+
+                <p className="mb-4"><strong>Legal & Compliance:</strong></p>
+                <ul className="mb-4">
+                    <li><strong>Legal Team:</strong> <a href="mailto:legal@supernote.app" className="text-blue-400 hover:text-blue-300">legal@supernote.app</a></li>
+                    <li><strong>Compliance:</strong> <a href="mailto:compliance@supernote.app" className="text-blue-400 hover:text-blue-300">compliance@supernote.app</a></li>
+                    <li><strong>Security Issues:</strong> <a href="mailto:security@supernote.app" className="text-blue-400 hover:text-blue-300">security@supernote.app</a></li>
+                </ul>
+
+                <p className="mb-4"><strong>Mailing Address:</strong></p>
+                <p className="mb-4">
+                    SuperNote Technologies, Inc.<br/>
+                    Privacy Department<br/>
+                    [Address to be added]<br/>
+                    [City, State, ZIP]<br/>
+                    United States
+                </p>
+
+                <p className="mb-4">
+                    We're committed to protecting your privacy and will respond to all privacy-related inquiries promptly. 
+                    Your trust is important to us, and we're here to address any concerns you may have about how we handle your data.
+                </p>
             </div>
-            
-            <div className="mt-12 text-center">
-                <a href="/" className="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg text-white font-medium transition-colors">
+
+            <div className="mt-12 mb-4">
+                <a href="/" className="text-white hover:text-gray-300">
                     ← Back to Home
                 </a>
             </div>
