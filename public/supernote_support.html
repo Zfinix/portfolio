@@ -5,6 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chatway Widget</title>
     <link rel="stylesheet" href="https://cdn.chatway.app/sdk.css" id="chatway-widget-css">
+    <style>
+        /* Hide and disable ALL close buttons */
+        .launcher-minimize-icon,
+        .close--btn,
+        [class*="close"],
+        [class*="minimize"],
+        button[class*="close"],
+        div[class*="close"],
+        span[class*="close"],
+        .chatway--container [class*="close"],
+        .chatway--frame-container [class*="close"],
+        .chatway--trigger-container [class*="close"] {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+            width: 0 !important;
+            height: 0 !important;
+            position: absolute !important;
+            left: -9999px !important;
+            z-index: -1 !important;
+        }
+
+        /* Prevent widget from being closable */
+        .chatway--container {
+            pointer-events: auto !important;
+        }
+
+        .chatway--container.widget--open {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+
+        /* Block any escape key functionality */
+        .chatway--container * {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+    </style>
 </head>
 
 <body class="chatway--active chatway-is-open" style="position: fixed; top: 0px; width: 100%; overflow: hidden;">
@@ -37,82 +79,187 @@
             }
         }
 
-        // OVERRRIDE CONSOLE
-        (function () {
-            var oldLog = console.log;
-            var oldWarn = console.warn;
-            var oldError = console.error;
-            var oldInfo = console.info;
-            var oldDebug = console.debug;
-            var oldTrace = console.trace;
+        // OVERRIDE CLOSE FUNCTIONALITY
+        function overrideCloseActions() {
+            // 1. Override the global close API
+            if (window.$chatway) {
+                const originalClose = window.$chatway.closeChatwayWidget;
+                window.$chatway.closeChatwayWidget = function () {
+                    console.log('🚫 Close action blocked by override - notifying Flutter');
+                    // Send close attempt notification to Flutter
+                    sendToFlutter('close', ['Widget close attempt blocked']);
+                    // Do nothing - prevents closing
+                    return false;
+                };
+                console.log('✅ Overrode $chatway.closeChatwayWidget');
+            }
 
-            console.log = function () {
-                sendToFlutter('log', arguments);
-                oldLog.apply(console, arguments);
-            };
-            console.warn = function () {
-                sendToFlutter('warn', arguments);
-                oldWarn.apply(console, arguments);
-            };
-            console.error = function () {
-                sendToFlutter('error', arguments);
-                oldError.apply(console, arguments);
-            };
-            console.info = function () {
-                sendToFlutter('info', arguments);
-                oldInfo.apply(console, arguments);
-            };
-            console.debug = function () {
-                sendToFlutter('debug', arguments);
-                oldDebug.apply(console, arguments);
-            };
-            console.trace = function () {
-                sendToFlutter('trace', arguments);
-                oldTrace.apply(console, arguments);
-            };
-        })();
+            // 2. Block all click events on close elements
+            document.addEventListener('click', function (event) {
+                const target = event.target;
+                const isCloseElement = target.classList.contains('launcher-minimize-icon') ||
+                    target.classList.contains('close--btn') ||
+                    target.closest('.launcher-minimize-icon') ||
+                    target.closest('.close--btn') ||
+                    target.className.includes('close') ||
+                    target.className.includes('minimize');
 
+                if (isCloseElement) {
+                    console.log('🚫 Blocked close click on:', target);
+                    // Send close attempt notification to Flutter
+                    sendToFlutter('close', ['Close button clicked - blocked']);
+                    event.preventDefault();
+                    event.stopPropagation();
+                    event.stopImmediatePropagation();
+                    return false;
+                }
+            }, true); // Use capture phase
 
-        // Wait for the widget to load, then click the launcher-icon div only if not opened before
-        function clickLauncherIconDivWhenReady() {
-            var launcher = document.querySelector('div.launcher-icon');
-            if (launcher) {
-                console.log('launcher found');
-                hideCloseBtn();
+            // 3. Override history back button (prevents mobile close)
+            window.addEventListener('popstate', function (event) {
+                console.log('🚫 Blocked back button close');
+                // Send close attempt notification to Flutter
+                sendToFlutter('close', ['Back button pressed - blocked']);
+                event.preventDefault();
+                event.stopPropagation();
+                // Force widget to stay open
+                if (window.$chatway) {
+                    setTimeout(() => window.$chatway.openChatwayWidget(), 100);
+                }
+                return false;
+            }, true);
+
+            // 4. Force widget to stay open if it gets closed
+            setInterval(function () {
+                const container = document.querySelector('.chatway--container');
+                if (container && !container.classList.contains('widget--open')) {
+                    console.log('🔄 Widget was closed, forcing it back open');
+                    // Send close detection notification to Flutter
+                    sendToFlutter('close', ['Widget was closed - auto-recovered']);
+                    if (window.$chatway) {
+                        window.$chatway.openChatwayWidget();
+                    }
+                }
+            }, 500);
+
+            // 5. Block keyboard shortcuts (like Escape key)
+            document.addEventListener('keydown', function (event) {
+                if (event.key === 'Escape' || event.keyCode === 27) {
+                    console.log('🚫 Blocked Escape key close');
+                    // Send close attempt notification to Flutter
+                    sendToFlutter('close', ['Escape key pressed - blocked']);
+                    event.preventDefault();
+                    event.stopPropagation();
+                    event.stopImmediatePropagation();
+                    return false;
+                }
+            }, true);
+
+            // 6. Block any window focus events that might close widget
+            window.addEventListener('blur', function (event) {
+                setTimeout(function () {
+                    if (window.$chatway) {
+                        window.$chatway.openChatwayWidget();
+                    }
+                }, 100);
+            });
+
+            console.log('🛡️ All close overrides activated');
+            // Notify Flutter that close protection is active
+            sendToFlutter('info', ['Close protection system activated']);
+        }
+
+        // Manual function to force widget open (can be called from Flutter)
+        window.forceOpenChat = function () {
+            console.log('🔓 Manual force open triggered');
+            if (window.$chatway) {
+                window.$chatway.openChatwayWidget();
+            }
+            // Also click launcher as backup
+            clickLauncher();
+            // Reapply overrides
+            overrideCloseActions();
+        };
+
+        // Test function to simulate close attempt (can be called from Flutter)
+        window.testCloseNotification = function () {
+            console.log('🧪 Testing close notification');
+            sendToFlutter('close', ['Test close notification from Flutter']);
+        };
+
+        // Open chat widget using the API
+        function openChatWidget() {
+            if (window.$chatway) {
+                console.log('Opening chat via API');
+                window.$chatway.openChatwayWidget();
                 notifyIfLoaded();
-                launcher.click();
             } else {
-                setTimeout(clickLauncherIconDivWhenReady, 200);
+                console.log('Chatway API not ready, retrying...');
+                setTimeout(openChatWidget, 500);
             }
         }
 
-        window.addEventListener('load', function () {
-            setTimeout(clickLauncherIconDivWhenReady, 1000);
-        });
+        // Fallback: click the launcher
+        function clickLauncher() {
+            var launcher = document.querySelector('.chatway-launcher') ||
+                document.querySelector('#chatway_widget_trigger');
+            if (launcher) {
+                console.log('Clicking launcher');
+                launcher.click();
+            }
+        }
 
         function notifyIfLoaded() {
             var loadedDiv = document.querySelector('div.has-loaded');
-            if (loadedDiv) {
+            if (loadedDiv && window.Flutter && window.Flutter.postMessage) {
                 window.Flutter.postMessage("has-loaded");
             }
         }
-        function hideCloseBtn() {
-            // Find the div that contains the 'close--btn' class and hide it
-            var closeBtnDiv = document.querySelector('div.close--btn');
-            if (closeBtnDiv) {
-                closeBtnDiv.style.display = 'none';
-            }
-        }
-        // Initial check
-        notifyIfLoaded();
-        hideCloseBtn();
-        // Observe DOM changes
-        var observer = new MutationObserver(function (mutations) {
-            notifyIfLoaded();
-            hideCloseBtn();
-        });
-        observer.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
 
+        // Hide close buttons continuously
+        function hideCloseButtons() {
+            var selectors = [
+                '.launcher-minimize-icon',
+                '.close--btn',
+                '[class*="close"]',
+                '[class*="minimize"]'
+            ];
+
+            selectors.forEach(function (selector) {
+                var elements = document.querySelectorAll(selector);
+                elements.forEach(function (el) {
+                    el.style.display = 'none';
+                    el.style.visibility = 'hidden';
+                    el.style.opacity = '0';
+                    el.style.pointerEvents = 'none';
+                });
+            });
+        }
+
+        // Start everything when page loads
+        window.addEventListener('load', function () {
+            console.log('Page loaded, starting chat widget');
+
+            // Start hiding close buttons immediately and continuously
+            hideCloseButtons();
+            setInterval(hideCloseButtons, 200);
+
+            // Activate close overrides immediately
+            overrideCloseActions();
+
+            // Try to open chat after a delay
+            setTimeout(function () {
+                openChatWidget();
+                // Fallback to clicking if API doesn't work
+                setTimeout(clickLauncher, 1000);
+
+                // Reapply overrides after widget loads
+                setTimeout(function () {
+                    overrideCloseActions();
+                    console.log('🔒 Close overrides reapplied after widget load');
+                }, 2000);
+            }, 1000);
+        });
     </script>
 </body>
 
