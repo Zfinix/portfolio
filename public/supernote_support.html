@@ -1,0 +1,77 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatway Widget</title>
+    <link rel="stylesheet" href="https://cdn.chatway.app/sdk.css" id="chatway-widget-css">
+</head>
+
+<body class="chatway--active chatway-is-open" style="position: fixed; top: 0px; width: 100%; overflow: hidden;">
+    <script>
+        // Helper to get URL params
+        function getParam(name) {
+            const url = new URL(window.location.href);
+            return url.searchParams.get(name) || '';
+        }
+
+        // Set user data from URL params before widget loads
+        window.chatwaySettings = {
+            visitor: {
+                data: {
+                    email: getParam('email'),
+                    name: getParam('name'),
+                },
+            }
+        };
+    </script>
+    <script id="chatway" src="https://cdn.chatway.app/widget.js?id=LCjfmy6pIcqN"></script>
+    <script>
+        // Global sendToFlutter function
+        function sendToFlutter(type, args) {
+            if (window.Flutter && window.Flutter.postMessage) {
+                window.Flutter.postMessage(JSON.stringify({
+                    type: type,
+                    message: Array.prototype.slice.call(args).join(' ')
+                }));
+            }
+        }
+
+        // OVERRRIDE CONSOLE
+        (function () {
+            var oldLog = console.log;
+            var oldWarn = console.warn;
+            var oldError = console.error;
+            var oldInfo = console.info;
+            var oldDebug = console.debug;
+            var oldTrace = console.trace;
+
+            console.log = function () {
+                sendToFlutter('log', arguments);
+                oldLog.apply(console, arguments);
+            };
+            console.warn = function () {
+                sendToFlutter('warn', arguments);
+                oldWarn.apply(console, arguments);
+            };
+            console.error = function () {
+                sendToFlutter('error', arguments);
+                oldError.apply(console, arguments);
+            };
+            console.info = function () {
+                sendToFlutter('info', arguments);
+                oldInfo.apply(console, arguments);
+            };
+            console.debug = function () {
+                sendToFlutter('debug', arguments);
+                oldDebug.apply(console, arguments);
+            };
+            console.trace = function () {
+                sendToFlutter('trace', arguments);
+                oldTrace.apply(console, arguments);
+            };
+        })();
+    </script>
+</body>
+
+</html> 
