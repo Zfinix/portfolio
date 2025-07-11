@@ -71,29 +71,14 @@
                 oldTrace.apply(console, arguments);
             };
         })();
-        // Check if launcher has been opened before using localStorage
-        function hasLauncherBeenOpened() {
-            return localStorage.getItem('chatwayLauncherOpened') === 'true';
-        }
 
-        // Mark launcher as opened in localStorage
-        function markLauncherAsOpened() {
-            localStorage.setItem('chatwayLauncherOpened', 'true');
-        }
 
         // Wait for the widget to load, then click the launcher-icon div only if not opened before
         function clickLauncherIconDivWhenReady() {
             var launcher = document.querySelector('div.launcher-icon');
             if (launcher) {
                 console.log('launcher found');
-                // Only click if it hasn't been opened before
-                if (!hasLauncherBeenOpened()) {
-                    console.log('opening launcher for the first time');
-                    launcher.click();
-                    markLauncherAsOpened();
-                } else {
-                    console.log('launcher already opened before, skipping');
-                }
+                launcher.click();
             } else {
                 setTimeout(clickLauncherIconDivWhenReady, 200);
             }
