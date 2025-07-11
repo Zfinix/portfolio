@@ -458,6 +458,21 @@
             sendToFlutter('close', ['Test close notification from Flutter']);
         };
 
+        // Manual function to force user data setting (can be called from Flutter)
+        window.forceSetUserData = function () {
+            console.log('🔧 Manual force user data setting triggered');
+            const result = continuousUserDataSetter();
+            if (result) {
+                console.log('✅ Manual user data setting successful');
+                sendToFlutter('info', ['Manual user data setting successful']);
+                return true;
+            } else {
+                console.log('❌ Manual user data setting failed');
+                sendToFlutter('warning', ['Manual user data setting failed']);
+                return false;
+            }
+        };
+
         // Open chat widget using the API
         function openChatWidget() {
             if (window.$chatway) {
