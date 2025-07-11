@@ -79,6 +79,10 @@
             }
         }
 
+        // Track widget initialization state
+        let widgetInitialized = false;
+        let monitoringInterval = null;
+
         // OVERRIDE CLOSE FUNCTIONALITY
         function overrideCloseActions() {
             // 1. Override the global close API
@@ -129,19 +133,6 @@
                 return false;
             }, true);
 
-            // 4. Force widget to stay open if it gets closed
-            setInterval(function () {
-                const container = document.querySelector('.chatway--container');
-                if (container && !container.classList.contains('widget--open')) {
-                    console.log('🔄 Widget was closed, forcing it back open');
-                    // Send close detection notification to Flutter
-                    sendToFlutter('close', ['Widget was closed - auto-recovered']);
-                    if (window.$chatway) {
-                        window.$chatway.openChatwayWidget();
-                    }
-                }
-            }, 500);
-
             // 5. Block keyboard shortcuts (like Escape key)
             document.addEventListener('keydown', function (event) {
                 if (event.key === 'Escape' || event.keyCode === 27) {
@@ -169,6 +160,43 @@
             sendToFlutter('info', ['Close protection system activated']);
         }
 
+        // Start monitoring for widget closure only after it's been confirmed open
+        function startWidgetMonitoring() {
+            if (monitoringInterval) {
+                clearInterval(monitoringInterval);
+            }
+
+            // 4. Force widget to stay open if it gets closed (only after initialization)
+            monitoringInterval = setInterval(function () {
+                if (!widgetInitialized) return; // Don't monitor during initial load
+
+                const container = document.querySelector('.chatway--container');
+                if (container && !container.classList.contains('widget--open')) {
+                    console.log('🔄 Widget was closed');
+                    // Send close detection notification to Flutter
+                    sendToFlutter('close', ['Widget was closed - auto-recovered']);
+                    if (window.$chatway) {
+                        window.$chatway.openChatwayWidget();
+                    }
+                }
+            }, 500);
+
+            console.log('🔍 Widget monitoring started');
+        }
+
+        // Check if widget is properly initialized and open
+        function checkWidgetInitialization() {
+            const container = document.querySelector('.chatway--container');
+            if (container && container.classList.contains('widget--open') && !widgetInitialized) {
+                widgetInitialized = true;
+                console.log('✅ Widget fully initialized and open');
+                // Start monitoring after a brief delay to ensure stability
+                setTimeout(startWidgetMonitoring, 1000);
+                // Notify Flutter that widget is ready
+                sendToFlutter('info', ['Widget initialization complete']);
+            }
+        }
+
         // Manual function to force widget open (can be called from Flutter)
         window.forceOpenChat = function () {
             console.log('🔓 Manual force open triggered');
@@ -179,6 +207,10 @@
             clickLauncher();
             // Reapply overrides
             overrideCloseActions();
+            // If not already monitoring, start monitoring
+            if (!monitoringInterval && widgetInitialized) {
+                startWidgetMonitoring();
+            }
         };
 
         // Test function to simulate close attempt (can be called from Flutter)
@@ -213,39 +245,21 @@
             var loadedDiv = document.querySelector('div.has-loaded');
             if (loadedDiv && window.Flutter && window.Flutter.postMessage) {
                 window.Flutter.postMessage("has-loaded");
+                // Check if widget is ready for monitoring
+                setTimeout(checkWidgetInitialization, 500);
             }
         }
 
-        // Hide close buttons continuously
-        function hideCloseButtons() {
-            var selectors = [
-                '.launcher-minimize-icon',
-                '.close--btn',
-                '[class*="close"]',
-                '[class*="minimize"]'
-            ];
-
-            selectors.forEach(function (selector) {
-                var elements = document.querySelectorAll(selector);
-                elements.forEach(function (el) {
-                    el.style.display = 'none';
-                    el.style.visibility = 'hidden';
-                    el.style.opacity = '0';
-                    el.style.pointerEvents = 'none';
-                });
-            });
-        }
 
         // Start everything when page loads
         window.addEventListener('load', function () {
             console.log('Page loaded, starting chat widget');
 
-            // Start hiding close buttons immediately and continuously
-            hideCloseButtons();
-            setInterval(hideCloseButtons, 200);
-
             // Activate close overrides immediately
             overrideCloseActions();
+
+            // Start checking for widget initialization
+            const initCheckInterval = setInterval(checkWidgetInitialization, 300);
 
             // Try to open chat after a delay
             setTimeout(function () {
@@ -257,6 +271,16 @@
                 setTimeout(function () {
                     overrideCloseActions();
                     console.log('🔒 Close overrides reapplied after widget load');
+
+                    // Stop checking for initialization after a reasonable timeout
+                    setTimeout(function () {
+                        if (!widgetInitialized) {
+                            console.log('⚠️ Widget initialization timeout - starting monitoring anyway');
+                            widgetInitialized = true;
+                            startWidgetMonitoring();
+                        }
+                        clearInterval(initCheckInterval);
+                    }, 5000);
                 }, 2000);
             }, 1000);
         });
