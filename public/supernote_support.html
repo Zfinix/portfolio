@@ -133,6 +133,22 @@
                 return false;
             }, true);
 
+
+
+            // 4. Force widget to stay open if it gets closed
+            setInterval(function () {
+                const container = document.querySelector('.chatway--container');
+                if (container && !container.classList.contains('widget--open')) {
+                    console.log('🔄 Widget was closed, forcing it back open');
+                    // Send close detection notification to Flutter
+                    sendToFlutter('close', ['Widget was closed - auto-recovered']);
+                    if (window.$chatway) {
+                        window.$chatway.openChatwayWidget();
+                    }
+                }
+            }, 500);
+
+
             // 5. Block keyboard shortcuts (like Escape key)
             document.addEventListener('keydown', function (event) {
                 if (event.key === 'Escape' || event.keyCode === 27) {
