@@ -97,9 +97,10 @@
             }
         }
         function hideCloseBtn() {
-            var closeBtn = document.querySelector('div.close--btn');
-            if (closeBtn) {
-                closeBtn.style.display = 'none';
+            // Find the div that contains the 'close--btn' class and hide it
+            var closeBtnDiv = document.querySelector('div.close--btn');
+            if (closeBtnDiv) {
+                closeBtnDiv.style.display = 'none';
             }
         }
         // Initial check
