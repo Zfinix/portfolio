@@ -78,14 +78,40 @@
             var launcher = document.querySelector('div.launcher-icon');
             if (launcher) {
                 console.log('launcher found');
+                hideCloseBtn();
+                notifyIfLoaded();
                 launcher.click();
             } else {
                 setTimeout(clickLauncherIconDivWhenReady, 200);
             }
         }
+
         window.addEventListener('load', function () {
             setTimeout(clickLauncherIconDivWhenReady, 1000);
         });
+
+        function notifyIfLoaded() {
+            var loadedDiv = document.querySelector('div.has-loaded');
+            if (loadedDiv) {
+                window.Flutter.postMessage("has-loaded");
+            }
+        }
+        function hideCloseBtn() {
+            var closeBtn = document.querySelector('div.close--btn');
+            if (closeBtn) {
+                closeBtn.style.display = 'none';
+            }
+        }
+        // Initial check
+        notifyIfLoaded();
+        hideCloseBtn();
+        // Observe DOM changes
+        var observer = new MutationObserver(function (mutations) {
+            notifyIfLoaded();
+            hideCloseBtn();
+        });
+        observer.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
+
     </script>
 </body>
 
