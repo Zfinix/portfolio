@@ -38,7 +38,7 @@ export default function Home() {
     <main className="text-zinc-900 dark:text-zinc-100 max-w-xl mx-auto px-4 py-4 min-h-screen flex flex-col justify-between">
       <div>
         <section className="mb-6">
-          <h1 className="text-xl font-medium tracking-tight mb-4 flex items-baseline justify-between">
+          <h1 className="text-xl font-medium tracking-tight mt-4mb-4 flex items-baseline justify-between">
             <span>Hey, I&apos;m Chizi</span>
             <button
               className="w-8 h-8 flex items-center justify-center rounded-md bg-transparent hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
