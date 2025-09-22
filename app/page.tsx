@@ -51,7 +51,7 @@ export default function Home() {
           </h1>
 
           <div className="text-sm text-zinc-600 dark:text-zinc-400 max-w-xl mb-8">
-            Senior Engineer with 8+ years building high-impact mobile platforms, cross-platform SDKs, and AI-powered developer tools. Currently building{" "}
+            DevRel Engineer & AI Builder — 8 years experience growing ecosystems, building SDKs, and scaling developer adoption worldwide. Currently building{" "}
             <LinkPreview url="https://supernote.app">
               <span className="text-zinc-900 dark:text-zinc-100 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">
                 SuperNote
@@ -308,6 +308,17 @@ export default function Home() {
             <section className="mb-12">
               <div className="space-y-8">
                 <ul className="space-y-8">
+                  <li className="group hover:translate-x-1 transition-all duration-300 ease-out">
+                    <div className="flex items-baseline justify-between mb-1">
+                      <h3 className="text-md font-medium">Developer Relations Engineer</h3>
+                      <span className="text-xs text-zinc-500 dark:text-zinc-400">Aug 2025 - Present</span>
+                    </div>
+                    <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-2">Serverpod • Dart Backend as a Service • Remote</p>
+                    <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-2">
+                      Architecting and delivering a comprehensive DevRel enablement suite—technical documentation, interactive slide decks, and guided onboarding resources—that continuously reduces new-developer onboarding time for Dart backend services from hours to minutes.
+                    </p>
+                  </li>
+
                   <li className="group hover:translate-x-1 transition-all duration-300 ease-out">
                     <div className="flex items-baseline justify-between mb-1">
                       <h3 className="text-md font-medium">Founder & Lead Engineer</h3>
