@@ -1,550 +1,325 @@
-"use client"
+import { CopyEmail } from "./components/copy-email";
+import { NameCycle } from "./components/name-cycle";
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "./components/ui/tabs"
-import { GithubIcon, LinkedinIcon, MailIcon, MoonIcon, SunIcon } from "lucide-react"
-import { useTheme } from "next-themes"
-import { LinkPreview } from "./components/link-preview"
-import {
-  Flutter,
-  Preact,
-  TypeScript,
-  Supabase,
-  Redis,
-  Kotlin,
-  Swift,
-  Dart,
-  PostgreSQL,
-  DigitalOcean,
-  Nextjs,
-  Java,
-  JavaScript,
-  Vue,
-  Cloudflare,
-  Docker,
-  MySQL,
-  SQLite,
-  MongoDB,
-  HuggingFace,
-  Gemini,
-  RustDark,
-  RustLight
-} from "@ridemountainpig/svgl-react"
-import ElevenLabs from "./logos/eleven-labs"
+type Item = {
+  year?: string;
+  label: string;
+  href?: string;
+  description?: string;
+  external?: boolean;
+};
+
+const currently: Item[] = [
+  {
+    label: "RaventHQ",
+    href: "https://raventhq.xyz",
+    description: "Building tools, mostly the AI-shaped ones.",
+    external: true,
+  },
+  {
+    label: "Serverpod",
+    href: "https://serverpod.dev",
+    description: "Developer relations.",
+    external: true,
+  },
+  {
+    label: "Juicyway",
+    href: "https://juicyway.com",
+    description: "Consulting on the cross-border mobile app.",
+    external: true,
+  },
+  {
+    label: "Instalog",
+    href: "https://instalog.dev",
+    description: "AI code review on GitHub. A side thing.",
+    external: true,
+  },
+];
+
+const work: Item[] = [
+  {
+    year: "2026",
+    label: "Instalog",
+    href: "https://instalog.dev",
+    description:
+      "AI code reviewer for GitHub. Rust, with a Semgrep gate up front so the bill stays small.",
+    external: true,
+  },
+  {
+    year: "2026",
+    label: "another",
+    href: "https://github.com/zfinix/another",
+    description:
+      "Tauri + Rust desktop app that mirrors and controls Android devices over USB.",
+    external: true,
+  },
+  {
+    year: "2026",
+    label: "OpenChow",
+    href: "https://github.com/zfinix/openchow",
+    description:
+      "Reverse-engineered MCP servers for Chowdeck, Glovo, and Mano.",
+    external: true,
+  },
+  {
+    year: "2026",
+    label: "SimCam & RocketSim audits",
+    href: "https://github.com/zfinix",
+    description:
+      "Pulled apart two macOS dev tools and wrote up the licensing flaws.",
+    external: true,
+  },
+  {
+    year: "2025",
+    label: "SuperNote",
+    href: "https://supernote.app",
+    description: "A note-taking app I built, my own thing.",
+    external: true,
+  },
+  {
+    year: "2025",
+    label: "Tikfetch",
+    href: "https://tikfetch.com",
+    description: "TikTok video downloader. Web, mobile, and an API.",
+    external: true,
+  },
+  {
+    year: "2025",
+    label: "mcp_server_dart",
+    href: "https://github.com/zfinix/mcp_server_dart",
+    description: "Annotation-driven MCP framework for Dart.",
+    external: true,
+  },
+  {
+    year: "2024",
+    label: "nigerian_banks_signal",
+    href: "https://github.com/zfinix/nigerian_banks_signal",
+    description:
+      "A small MVVM example using Signals + Dio to fetch every Nigerian bank.",
+    external: true,
+  },
+  {
+    year: "2023",
+    label: "irev-results",
+    href: "https://github.com/zfinix/irev-results",
+    description:
+      "Scraping INEC's IREV portal to track Nigerian election results in real time.",
+    external: true,
+  },
+  {
+    year: "2022",
+    label: "worddle",
+    href: "https://github.com/zfinix/worddle",
+    description:
+      "A Wordle clone in Flutter, written the week the original blew up.",
+    external: true,
+  },
+  {
+    year: "2021",
+    label: "awesome-dart-web3",
+    href: "https://github.com/zfinix/awesome-dart-web3",
+    description:
+      "A list of Web3 tools for Dart and Flutter. Some people seem to like it.",
+    external: true,
+  },
+  {
+    year: "2021",
+    label: "arduino_projects",
+    href: "https://github.com/zfinix/arduino_projects",
+    description:
+      "A pile of Flutter + Arduino experiments. Software pretending to know hardware.",
+    external: true,
+  },
+  {
+    year: "2020",
+    label: "dataoversound",
+    href: "https://github.com/zfinix/dataoversound",
+    description: "Sending data across a room as sound, in Dart.",
+    external: true,
+  },
+];
+
+const talks: Item[] = [
+  {
+    year: "2021",
+    label: "Flutter Architecture with Riverpod",
+    href: "https://www.youtube.com/watch?v=yNwUj9Xnxpw",
+    external: true,
+  },
+];
+
+const elsewhere: Item[] = [
+  { label: "GitHub", href: "https://github.com/zfinix", external: true },
+  {
+    label: "LinkedIn",
+    href: "https://linkedin.com/in/chiziaruhoma",
+    external: true,
+  },
+  { label: "X", href: "https://x.com/zfinix", external: true },
+];
+
+function ExternalArrow() {
+  return (
+    <svg
+      className="w-3 h-3 flex-shrink-0 ml-1 inline-block"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      strokeWidth={2}
+      aria-hidden="true"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M7 17L17 7M7 7h10v10"
+      />
+    </svg>
+  );
+}
+
+function ItemLink({ item }: { item: Item }) {
+  if (!item.href) {
+    return <span className="text-[14px]">{item.label}</span>;
+  }
+  return (
+    <a
+      href={item.href}
+      target={item.external ? "_blank" : undefined}
+      rel={item.external ? "noopener noreferrer" : undefined}
+      className="link-underline inline-flex items-baseline w-fit text-[14px]"
+    >
+      <span>{item.label}</span>
+      {item.external && <ExternalArrow />}
+    </a>
+  );
+}
+
+function ItemRow({ item }: { item: Item }) {
+  return (
+    <div className="flex flex-col gap-1">
+      <ItemLink item={item} />
+      {item.description && (
+        <div className="text-gray-600 text-[12px] leading-relaxed">
+          {item.description}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function YearRow({ item }: { item: Item }) {
+  return (
+    <div className="md:grid md:grid-cols-[1fr_200px] md:gap-12 flex flex-col gap-1">
+      <div className="flex flex-col gap-1 min-w-0">
+        <ItemLink item={item} />
+        {item.description && (
+          <div className="text-gray-600 text-[12px] leading-relaxed">
+            {item.description}
+          </div>
+        )}
+      </div>
+      <div className="text-black text-[12px] tabular-nums md:pt-[3px]">
+        {item.year}
+      </div>
+    </div>
+  );
+}
+
+function Section({
+  label,
+  children,
+  tight,
+}: {
+  label: string;
+  children: React.ReactNode;
+  tight?: boolean;
+}) {
+  return (
+    <section className="flex flex-col gap-4">
+      <h2 className="text-black font-semibold text-[16px]">{label}</h2>
+      <div className={`flex flex-col ${tight ? "gap-1" : "gap-4"}`}>
+        {children}
+      </div>
+    </section>
+  );
+}
 
 export default function Home() {
-  const { setTheme, theme } = useTheme()
-
   return (
-    <div className="text-zinc-900 dark:text-zinc-100 min-h-screen flex flex-col">
-      <main className="flex-1 max-w-7xl mx-auto px-4 py-8">
-        {/* Header Section */}
-        <header className="mb-12">
-          <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
-            <div className="flex-1">
-              <h1 className="text-2xl font-medium tracking-tight mb-4 flex items-center justify-between lg:justify-start">
-                <span>Hey, I&apos;m Chizi</span>
-                <button
-                  className="lg:ml-4 w-8 h-8 flex items-center justify-center rounded-md bg-transparent hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
-                  aria-label="Toggle theme"
-                  onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                >
-                  <SunIcon className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-                  <MoonIcon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-                </button>
-              </h1>
+    <div className="min-h-screen bg-white text-black">
+      <hr className="max-w-3xl mx-auto border-gray-200" />
 
-              <div className="text-sm text-zinc-600 dark:text-zinc-400 mb-6 max-w-2xl">
-                DevRel Engineer & AI Builder with 8 years experience growing ecosystems, building SDKs, and scaling developer adoption worldwide. Currently building{" "}
-                <LinkPreview url="https://supernote.app">
-                  <span className="text-zinc-900 dark:text-zinc-100 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">
-                    SuperNote
-                  </span>
-                </LinkPreview>{" "}
-                and{" "}
-                <LinkPreview url="https://instalog.dev">
-                  <span className="text-zinc-900 dark:text-zinc-100 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">
-                    Instalog
-                  </span>
-                </LinkPreview>.
+      <main className="max-w-3xl mx-auto px-6 md:px-10 py-12 md:py-16">
+        <div className="flex flex-col gap-16">
+          <div className="md:grid md:grid-cols-[1fr_200px] md:gap-12 flex flex-col gap-12">
+            <section className="flex flex-col gap-7">
+              <div>
+                <div className="text-[14px] text-gray-500 leading-none mb-3">
+                  I&apos;m
+                </div>
+                <div className="text-[56px] md:text-[80px] font-medium tracking-[-0.045em] leading-[0.95]">
+                  <NameCycle />
+                  <span className="text-gray-300">.</span>
+                </div>
               </div>
-            </div>
+              <div className="flex flex-col gap-4 max-w-prose text-[14px] leading-[1.65]">
+                <p>
+                  I build AI tools and the apps that put them in front of
+                  people. Mostly with Expo and Rust now, after years of Flutter
+                  and Dart before that.
+                </p>
+                <p>
+                  I&apos;m at my best taking a messy product idea and turning it
+                  into something people actually use end to end. Native code,
+                  backends, shipping, the whole thing.
+                </p>
+                <p>
+                  I&apos;ve spent the last ten years doing this across
+                  fintech, consumer apps, and a stretch of Web3, on small
+                  founding teams and as a solo developer.
+                </p>
+                <p>
+                  Outside of work I reverse engineer apps for fun,
+                  contribute to open source, and build small things just to see
+                  if I can.
+                </p>
+              </div>
+            </section>
 
-            <div className="flex items-center gap-5">
-              <a
-                target="_blank"
-                className="overflow-hidden transition-all text-zinc-900/60 dark:text-zinc-100/60 hover:text-zinc-900/100 dark:hover:text-zinc-100/100"
-                href="mailto:chizi@supernote.app"
-              >
-                <MailIcon className="h-5 w-5" />
-                <p className="sr-only">email</p>
-              </a>
-              <LinkPreview url="https://github.com/zfinix">
-                <span className="overflow-hidden transition-all text-zinc-900/60 dark:text-zinc-100/60 hover:text-zinc-900/100 dark:hover:text-zinc-100/100">
-                  <GithubIcon className="h-5 w-5" />
-                  <p className="sr-only">github</p>
-                </span>
-              </LinkPreview>
-              <LinkPreview url="https://linkedin.com/in/chiziaruhoma">
-                <span className="overflow-hidden transition-all text-zinc-900/60 dark:text-zinc-100/60 hover:text-zinc-900/100 dark:hover:text-zinc-100/100">
-                  <LinkedinIcon className="h-5 w-5" />
-                  <p className="sr-only">linkedin</p>
-                </span>
-              </LinkPreview>
-            </div>
+            <aside className="md:pt-3">
+              <Section label="Now">
+                {currently.map((item) => (
+                  <ItemRow key={item.label} item={item} />
+                ))}
+              </Section>
+            </aside>
           </div>
-        </header>
 
-        {/* Content Section */}
-        <section>
-          <Tabs defaultValue="projects" className="flex flex-col gap-4">
-            <TabsList className="text-muted-foreground inline-flex h-10 w-full lg:w-fit items-center justify-center rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50 p-1">
-              <TabsTrigger
-                value="projects"
-                className="!bg-transparent !border-none !shadow-none !font-medium data-[state=active]:!bg-white dark:data-[state=active]:!bg-zinc-800 data-[state=active]:!text-zinc-900 dark:data-[state=active]:!text-zinc-100 !text-zinc-600 dark:!text-zinc-400 transition-all duration-300 ease-out"
-              >
-                Projects
-              </TabsTrigger>
-              <TabsTrigger
-                value="experience"
-                className="!bg-transparent !border-none !shadow-none !font-medium data-[state=active]:!bg-white dark:data-[state=active]:!bg-zinc-800 data-[state=active]:!text-zinc-900 dark:data-[state=active]:!text-zinc-100 !text-zinc-600 dark:!text-zinc-400 transition-all duration-300 ease-out"
-              >
-                Experience
-              </TabsTrigger>
-              <TabsTrigger
-                value="tools"
-                className="!bg-transparent !border-none !shadow-none !font-medium data-[state=active]:!bg-white dark:data-[state=active]:!bg-zinc-800 data-[state=active]:!text-zinc-900 dark:data-[state=active]:!text-zinc-100 !text-zinc-600 dark:!text-zinc-400 transition-all duration-300 ease-out"
-              >
-                Tools
-              </TabsTrigger>
-            </TabsList>
+          <Section label="Built">
+            {work.map((item) => (
+              <YearRow key={item.label} item={item} />
+            ))}
+          </Section>
 
-            <TabsContent value="projects" className="flex-1 outline-none mt-8">
-              <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-                <div className="group p-6 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 hover:shadow-lg hover:border-zinc-300 dark:hover:border-zinc-700 transition-all duration-300 ease-out">
-                  <div className="flex items-baseline justify-between mb-1">
-                    <h3 className="text-md font-medium">SuperNote</h3>
-                    <div className="flex flex-row gap-2">
-                      <LinkPreview url="https://github.com/zfinix/supernote">
-                        <span className="flex items-center gap-1 text-xs text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">
-                          GitHub
-                        </span>
-                      </LinkPreview>
-                      <LinkPreview url="https://supernote.app">
-                        <span className="flex items-center gap-1 text-xs text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">
-                          View
-                        </span>
-                      </LinkPreview>
-                      <LinkPreview url="https://x.com/i/status/1937560981065851134">
-                        <span className="flex items-center gap-1 text-xs text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">
-                          Demo
-                        </span>
-                      </LinkPreview>
-                    </div>
-                  </div>
-                  <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-2">
-                    An AI-first study tool that converts YouTube, TikTok, PDFs, and voice into structured notes, quizzes, and flashcards.
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    <div className="flex items-center gap-1">
-                      <Flutter className="w-4 h-4" />
-                      <span className="text-xs text-zinc-400 dark:text-zinc-500">Flutter</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <Preact className="w-4 h-4" />
-                      <span className="text-xs text-zinc-400 dark:text-zinc-500">React</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <TypeScript className="w-4 h-4" />
-                      <span className="text-xs text-zinc-400 dark:text-zinc-500">TypeScript</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <Supabase className="w-4 h-4" />
-                      <span className="text-xs text-zinc-400 dark:text-zinc-500">Supabase</span>
-                    </div>
-                    <span className="text-xs text-zinc-400 dark:text-zinc-500">OpenRouter</span>
-                    <span className="text-xs text-zinc-400 dark:text-zinc-500">LangChain</span>
-                    <span className="text-xs text-zinc-400 dark:text-zinc-500">ElevenLabs</span>
-                  </div>
-                </div>
+          <Section label="Said">
+            {talks.map((item) => (
+              <YearRow key={item.label} item={item} />
+            ))}
+          </Section>
 
-                <div className="group p-6 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 hover:shadow-lg hover:border-zinc-300 dark:hover:border-zinc-700 transition-all duration-300 ease-out">
-                  <div className="flex items-baseline justify-between mb-1">
-                    <h3 className="text-md font-medium">Instalog</h3>
-                    <div className="flex flex-row gap-2">
-                      <LinkPreview url="https://github.com/zfinix/instalog">
-                        <span className="flex items-center gap-1 text-xs text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">
-                          GitHub
-                        </span>
-                      </LinkPreview>
-                      <LinkPreview url="https://instalog.dev">
-                        <span className="flex items-center gap-1 text-xs text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">
-                          View
-                        </span>
-                      </LinkPreview>
-                      <LinkPreview url="https://www.instalog.dev/assets/intro.gif">
-                        <span className="flex items-center gap-1 text-xs text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">
-                          Demo
-                        </span>
-                      </LinkPreview>
-                    </div>
-                  </div>
-                  <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-2">
-                    A real-time logging, crash reporting, and AI debugging SDK built with mobile-native integrations; serving 10K+ sessions/week across platforms.
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-
-                    <div className="flex items-center gap-1">
-                      {theme === "dark" ? (
-                        <RustDark className="w-4 h-4" />
-                      ) : (
-                        <RustLight className="w-4 h-4 text-zinc-700" />
-                      )}
-                      <span className="text-xs text-zinc-400 dark:text-zinc-500">Rust</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <Supabase className="w-4 h-4" />
-                      <span className="text-xs text-zinc-400 dark:text-zinc-500">Supabase</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <Redis className="w-4 h-4" />
-                      <span className="text-xs text-zinc-400 dark:text-zinc-500">Redis</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <Kotlin className="w-4 h-4" />
-                      <span className="text-xs text-zinc-400 dark:text-zinc-500">Kotlin</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <Swift className="w-4 h-4" />
-                      <span className="text-xs text-zinc-400 dark:text-zinc-500">Swift</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <Dart className="w-4 h-4" />
-                      <span className="text-xs text-zinc-400 dark:text-zinc-500">Dart</span>
-                    </div>
-                    <span className="text-xs text-zinc-400 dark:text-zinc-500">React Native</span>
-                  </div>
-                </div>
-
-                <div className="group p-6 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 hover:shadow-lg hover:border-zinc-300 dark:hover:border-zinc-700 transition-all duration-300 ease-out">
-                  <div className="flex items-baseline justify-between mb-1">
-                    <h3 className="text-md font-medium">Tikfetch</h3>
-                    <div className="flex flex-row gap-2">
-                      <LinkPreview url="https://tikfetch.xyz">
-                        <span className="flex items-center gap-1 text-xs text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">
-                          View
-                        </span>
-                      </LinkPreview>
-                    </div>
-                  </div>
-                  <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-2">
-                    A zero-login TikTok downloader with smart caption parsing and near-zero cold starts; processed over 500K fetches.
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    <div className="flex items-center gap-1">
-                      <TypeScript className="w-4 h-4" />
-                      <span className="text-xs text-zinc-400 dark:text-zinc-500">TypeScript</span>
-                    </div>
-                    <span className="text-xs text-zinc-400 dark:text-zinc-500">BetterAuth</span>
-                    <div className="flex items-center gap-1">
-                      <Redis className="w-4 h-4" />
-                      <span className="text-xs text-zinc-400 dark:text-zinc-500">Redis</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <PostgreSQL className="w-4 h-4" />
-                      <span className="text-xs text-zinc-400 dark:text-zinc-500">PostgreSQL</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <DigitalOcean className="w-4 h-4" />
-                      <span className="text-xs text-zinc-400 dark:text-zinc-500">DigitalOcean</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="group p-6 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 hover:shadow-lg hover:border-zinc-300 dark:hover:border-zinc-700 transition-all duration-300 ease-out">
-                  <div className="flex items-baseline justify-between mb-1">
-                    <h3 className="text-md font-medium">NBX Smart Battery Passport</h3>
-                    <div className="flex flex-row gap-2">
-                      <span className="text-xs text-zinc-500 dark:text-zinc-400">Enterprise</span>
-                    </div>
-                  </div>
-                  <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-2">
-                    A $500K+ blockchain platform for sustainability and logistics with privacy-preserving modules using ZKPs and secure enclaves.
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    <div className="flex items-center gap-1">
-                      <Flutter className="w-4 h-4" />
-                      <span className="text-xs text-zinc-400 dark:text-zinc-500">Flutter</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <Kotlin className="w-4 h-4" />
-                      <span className="text-xs text-zinc-400 dark:text-zinc-500">Kotlin</span>
-                    </div></div>
-                </div>
-
-                <div className="group p-6 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 hover:shadow-lg hover:border-zinc-300 dark:hover:border-zinc-700 transition-all duration-300 ease-out">
-                  <div className="flex items-baseline justify-between mb-1">
-                    <h3 className="text-md font-medium">Eden Life Mobile App</h3>
-                    <div className="flex flex-row gap-2">
-                      <span className="text-xs text-zinc-500 dark:text-zinc-400">100K+ MAU</span>
-                    </div>
-                  </div>
-                  <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-2">
-                    Re-architected household services app that cut onboarding time from 24 mins to 4 mins, resulting in a 3× increase in activation rates.
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    <div className="flex items-center gap-1">
-                      <Flutter className="w-4 h-4" />
-                      <span className="text-xs text-zinc-400 dark:text-zinc-500">Flutter</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <Kotlin className="w-4 h-4" />
-                      <span className="text-xs text-zinc-400 dark:text-zinc-500">Kotlin</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <Swift className="w-4 h-4" />
-                      <span className="text-xs text-zinc-400 dark:text-zinc-500">Swift</span>
-                    </div>
-                    <span className="text-xs text-zinc-400 dark:text-zinc-500">GetStream SDK</span>
-                    <span className="text-xs text-zinc-400 dark:text-zinc-500">Real-time Chat</span>
-                  </div>
-                </div>
-              </div>
-            </TabsContent>
-
-            <TabsContent value="experience" className="flex-1 outline-none mt-8">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div className="group p-6 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 hover:shadow-lg hover:border-zinc-300 dark:hover:border-zinc-700 transition-all duration-300 ease-out">
-                  <div className="flex items-baseline justify-between mb-1">
-                    <h3 className="text-md font-medium">Developer Relations Engineer</h3>
-                    <span className="text-xs text-zinc-500 dark:text-zinc-400">Aug 2025 - Present</span>
-                  </div>
-                  <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-2">Serverpod • Dart Backend as a Service • Remote</p>
-                    <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-2">
-                      Architecting and delivering a comprehensive DevRel enablement suite with technical documentation, interactive slide decks, and guided onboarding resources that continuously reduces new-developer onboarding time for Dart backend services from hours to minutes.
-                    </p>
-                </div>
-
-                <div className="group p-6 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 hover:shadow-lg hover:border-zinc-300 dark:hover:border-zinc-700 transition-all duration-300 ease-out">
-                  <div className="flex items-baseline justify-between mb-1">
-                    <h3 className="text-md font-medium">Founder & Lead Engineer</h3>
-                    <span className="text-xs text-zinc-500 dark:text-zinc-400">Feb 2025 - Present</span>
-                  </div>
-                  <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-2">Ravent • Wilmington, DE</p>
-                  <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-2">
-                    Building intelligent SaaS, apps & products. Led development of SuperNote, Instalog, and Tikfetch.xyz serving thousands of users.
-                  </p>
-                </div>
-
-                <div className="group p-6 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 hover:shadow-lg hover:border-zinc-300 dark:hover:border-zinc-700 transition-all duration-300 ease-out">
-                  <div className="flex items-baseline justify-between mb-1">
-                    <h3 className="text-md font-medium">Lead Software Engineer (Mobile)</h3>
-                    <span className="text-xs text-zinc-500 dark:text-zinc-400">Jun 2021 - Present</span>
-                  </div>
-                  <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-2">Juicyway • Lagos, Remote • Contract</p>
-                  <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-2">
-                    Led fintech application development ensuring regulatory compliance. Designed responsive UI/UX and implemented security protocols for SOC compliance. Instrumental in $3M pre-seed funding and supporting 3,000+ customers across multiple countries.
-                  </p>
-                </div>
-
-                <div className="group p-6 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 hover:shadow-lg hover:border-zinc-300 dark:hover:border-zinc-700 transition-all duration-300 ease-out">
-                  <div className="flex items-baseline justify-between mb-1">
-                    <h3 className="text-md font-medium">Senior Software Engineer</h3>
-                    <span className="text-xs text-zinc-500 dark:text-zinc-400">Mar 2023 - Feb 2025</span>
-                  </div>
-                  <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-2">Unbox Universe (NBX) • Remote</p>
-                  <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-2">
-                    Led mobile development for blockchain sustainability platform. Delivered $500K+ smart battery passport across 3 EU countries. Contributed to €12M Series A raise.
-                  </p>
-                </div>
-
-                <div className="group p-6 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 hover:shadow-lg hover:border-zinc-300 dark:hover:border-zinc-700 transition-all duration-300 ease-out">
-                  <div className="flex items-baseline justify-between mb-1">
-                    <h3 className="text-md font-medium">Lead Mobile Engineer</h3>
-                    <span className="text-xs text-zinc-500 dark:text-zinc-400">Aug 2022 - Feb 2023</span>
-                  </div>
-                  <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-2">Eden Life Inc. • Remote</p>
-                  <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-2">
-                    Re-architected mobile app, reducing onboarding time by 83% and boosting weekly active users by 2.6×. Scaled to 100K+ monthly active sessions.
-                  </p>
-                </div>
-
-                <div className="group p-6 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 hover:shadow-lg hover:border-zinc-300 dark:hover:border-zinc-700 transition-all duration-300 ease-out">
-                  <div className="flex items-baseline justify-between mb-1">
-                    <h3 className="text-md font-medium">Senior Software Engineer</h3>
-                    <span className="text-xs text-zinc-500 dark:text-zinc-400">Feb 2022 - Aug 2022</span>
-                  </div>
-                  <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-2">Tendermint (Cosmos) • Las Vegas, NV</p>
-                  <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-2">
-                    Built gRPC SDKs and secure wallet signing features for Cosmos blockchain ecosystem. Contributed to Starport and Emeris platforms.
-                  </p>
-                </div>
-
-                <div className="group p-6 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 hover:shadow-lg hover:border-zinc-300 dark:hover:border-zinc-700 transition-all duration-300 ease-out">
-                  <div className="flex items-baseline justify-between mb-1">
-                    <h3 className="text-md font-medium">Senior Software Engineer</h3>
-                    <span className="text-xs text-zinc-500 dark:text-zinc-400">Jan 2021 - Mar 2022</span>
-                  </div>
-                  <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-2">Bottlepay (Acquired by NYDIG) • Newcastle, UK</p>
-                  <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-2">
-                    Delivered crypto payment flows with hardware signing and multi-sig features. Reduced Bitcoin and Lightning transaction latency by 35%.
-                  </p>
-                </div>
-              </div>
-            </TabsContent>
-
-            <TabsContent value="tools" className="flex-1 outline-none mt-8">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div>
-                  <h3 className="text-md font-medium mb-3">Languages</h3>
-                  <div className="flex flex-wrap gap-3">
-                    <div className="flex items-center gap-2">
-                      <Dart className="w-5 h-5" />
-                      <span className="text-sm text-zinc-600 dark:text-zinc-400">Dart</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <TypeScript className="w-5 h-5" />
-                      <span className="text-sm text-zinc-600 dark:text-zinc-400">TypeScript</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Kotlin className="w-5 h-5" />
-                      <span className="text-sm text-zinc-600 dark:text-zinc-400">Kotlin</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Swift className="w-5 h-5" />
-                      <span className="text-sm text-zinc-600 dark:text-zinc-400">Swift</span>
-                    </div>
-                    <span className="text-sm text-zinc-600 dark:text-zinc-400">Rust</span>
-                    <div className="flex items-center gap-2">
-                      <Java className="w-5 h-5" />
-                      <span className="text-sm text-zinc-600 dark:text-zinc-400">Java</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <JavaScript className="w-5 h-5" />
-                      <span className="text-sm text-zinc-600 dark:text-zinc-400">JavaScript</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <h3 className="text-md font-medium mb-3">Frameworks & Libraries</h3>
-                  <div className="flex flex-wrap gap-3">
-                    <div className="flex items-center gap-2">
-                      <Flutter className="w-5 h-5" />
-                      <span className="text-sm text-zinc-600 dark:text-zinc-400">Flutter</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Preact className="w-5 h-5" />
-                      <span className="text-sm text-zinc-600 dark:text-zinc-400">React</span>
-                    </div>
-                    <span className="text-sm text-zinc-600 dark:text-zinc-400">React Native</span>
-                    <div className="flex items-center gap-2">
-                      <Nextjs className="w-5 h-5" />
-                      <span className="text-sm text-zinc-600 dark:text-zinc-400">Next.js</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Swift className="w-5 h-5" />
-                      <span className="text-sm text-zinc-600 dark:text-zinc-400">SwiftUI</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Vue className="w-5 h-5" />
-                      <span className="text-sm text-zinc-600 dark:text-zinc-400">Vue</span>
-                    </div>
-                    <span className="text-sm text-zinc-600 dark:text-zinc-400">LangChain</span>
-                    <span className="text-sm text-zinc-600 dark:text-zinc-400">LangGraph</span>
-                  </div>
-                </div>
-
-                <div>
-                  <h3 className="text-md font-medium mb-3">Cloud & Infrastructure</h3>
-                  <div className="flex flex-wrap gap-3">
-                    <span className="text-sm text-zinc-600 dark:text-zinc-400">AWS</span>
-                    <span className="text-sm text-zinc-600 dark:text-zinc-400">GCP</span>
-                    <div className="flex items-center gap-2">
-                      <Supabase className="w-5 h-5" />
-                      <span className="text-sm text-zinc-600 dark:text-zinc-400">Supabase</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <DigitalOcean className="w-5 h-5" />
-                      <span className="text-sm text-zinc-600 dark:text-zinc-400">DigitalOcean</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Cloudflare className="w-5 h-5" />
-                      <span className="text-sm text-zinc-600 dark:text-zinc-400">Cloudflare</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Docker className="w-5 h-5" />
-                      <span className="text-sm text-zinc-600 dark:text-zinc-400">Docker</span>
-                    </div>
-                    <span className="text-sm text-zinc-600 dark:text-zinc-400">GitHub Actions</span>
-                  </div>
-                </div>
-
-                <div>
-                  <h3 className="text-md font-medium mb-3">Databases</h3>
-                  <div className="flex flex-wrap gap-3">
-                    <div className="flex items-center gap-2">
-                      <PostgreSQL className="w-5 h-5" />
-                      <span className="text-sm text-zinc-600 dark:text-zinc-400">PostgreSQL</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Redis className="w-5 h-5" />
-                      <span className="text-sm text-zinc-600 dark:text-zinc-400">Redis</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <MySQL className="w-5 h-5" />
-                      <span className="text-sm text-zinc-600 dark:text-zinc-400">MySQL</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <SQLite className="w-5 h-5" />
-                      <span className="text-sm text-zinc-600 dark:text-zinc-400">SQLite</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <MongoDB className="w-5 h-5" />
-                      <span className="text-sm text-zinc-600 dark:text-zinc-400">MongoDB</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <h3 className="text-md font-medium mb-3">AI & ML</h3>
-                  <div className="flex flex-wrap gap-3">
-                    <span className="text-sm text-zinc-600 dark:text-zinc-400">OpenAI</span>
-                    <span className="text-sm text-zinc-600 dark:text-zinc-400">OpenRouter</span>
-                    <div className="flex items-center gap-2">
-                      <HuggingFace className="w-5 h-5" />
-                      <span className="text-sm text-zinc-600 dark:text-zinc-400">HuggingFace</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Gemini className="w-5 h-5" />
-                      <span className="text-sm text-zinc-600 dark:text-zinc-400">Gemini</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <ElevenLabs className="w-3 h-3" />
-                      <span className="text-sm text-zinc-600 dark:text-zinc-400">ElevenLabs</span>
-                    </div>
-                    <span className="text-sm text-zinc-600 dark:text-zinc-400">RAG Pipelines</span>
-                    <span className="text-sm text-zinc-600 dark:text-zinc-400">Embeddings</span>
-                  </div>
-                </div>
-              </div>
-            </TabsContent>
-          </Tabs>
-        </section>
+          <Section label="Find me" tight>
+            {elsewhere.map((item) => (
+              <ItemLink key={item.label} item={item} />
+            ))}
+            <CopyEmail />
+          </Section>
+        </div>
       </main>
 
-      {/* Enhanced Footer */}
-      <footer className="flex-shrink-0 h-16 border-t border-zinc-200 dark:border-zinc-800 flex items-center">
-        <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-2 w-full">
-          <div className="text-xs text-zinc-500 dark:text-zinc-400">
-            © 2025 chizi.app
-          </div>
-          <div className="flex gap-4">
-            <a href="mailto:chizi@supernote.app" className="text-xs text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">Email</a>
-            <a href="https://github.com/zfinix" className="text-xs text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">GitHub</a>
-            <a href="https://linkedin.com/in/chiziaruhoma" className="text-xs text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">LinkedIn</a>
-          </div>
-        </div>
+      <footer className="max-w-3xl mx-auto px-6 md:px-10 pb-10 pt-6 border-t border-gray-200 text-gray-400 text-[12px] flex justify-between">
+        <span>© Chizi Ogbonda</span>
+        <span>Last updated 2026</span>
       </footer>
     </div>
-  )
+  );
 }

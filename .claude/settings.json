@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -E \"\\\\.md$\")",
+      "Bash(curl -sL \"https://www.google.com/search?q=%22Chiziaruhoma+Ogbonda%22+talk+OR+conference+OR+speaker+OR+podcast\" -A \"Mozilla/5.0\")",
+      "WebFetch(domain:casprine.com)",
+      "WebFetch(domain:www.sesan.studio)",
+      "WebFetch(domain:www.chidiwilliams.com)",
+      "Bash(bunx biome *)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:3000)",
+      "Bash(curl -s http://localhost:3000)",
+      "Bash(curl -sL -I https://supernote.app)"
+    ]
+  }
+}

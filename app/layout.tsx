@@ -1,24 +1,17 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
-import Script from "next/script";
-import ClientBody from "./ClientBody";
-import { ThemeProvider } from "./components/theme-provider";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Chizi Ogbonda | Senior Engineer | Mobile & AI Platforms",
+  title: "Chizi Ogbonda",
   description:
-    "Senior Engineer with 8+ years building high-impact mobile platforms, cross-platform SDKs, and AI-powered developer tools. Currently building SuperNote and Instalog.",
+    "I build AI tools and the apps that put them in front of people. Currently running RaventHQ, doing dev rel at Serverpod, and consulting on Juice.",
 };
 
 export default function RootLayout({
@@ -27,27 +20,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable}`}
-      suppressHydrationWarning
-    >
-      <head>
-        <Script
-          crossOrigin="anonymous"
-          src="//unpkg.com/same-runtime/dist/index.global.js"
-        />
-      </head>
-      <body suppressHydrationWarning className="antialiased">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <ClientBody>{children}</ClientBody>
-        </ThemeProvider>
-      </body>
+    <html lang="en" className={inter.variable}>
+      <body className="antialiased font-sans">{children}</body>
     </html>
   );
 }
