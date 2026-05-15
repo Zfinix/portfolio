@@ -62,14 +62,6 @@ const work: Item[] = [
     external: true,
   },
   {
-    year: "2026",
-    label: "SimCam & RocketSim audits",
-    href: "https://github.com/zfinix",
-    description:
-      "Pulled apart two macOS dev tools and wrote up the licensing flaws.",
-    external: true,
-  },
-  {
     year: "2025",
     label: "SuperNote",
     href: "https://supernote.app",

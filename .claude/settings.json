@@ -9,7 +9,13 @@
       "Bash(bunx biome *)",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:3000)",
       "Bash(curl -s http://localhost:3000)",
-      "Bash(curl -sL -I https://supernote.app)"
+      "Bash(curl -sL -I https://supernote.app)",
+      "Bash(vercel --version)",
+      "Bash(bunx --bun vercel --version)",
+      "Bash(bunx --bun vercel whoami)",
+      "Bash(bunx --bun vercel project ls)",
+      "Bash(bunx --bun vercel link --project v0-portfolio --yes)",
+      "Bash(bunx --bun vercel --prod --yes)"
     ]
   }
 }
