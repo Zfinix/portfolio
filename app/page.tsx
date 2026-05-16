@@ -133,9 +133,103 @@ const work: Item[] = [
 
 const talks: Item[] = [
   {
+    year: "2025",
+    label:
+      "Building an AI Chat CLI in Dart: Real-Time Conversations with Gemini + OpenRouter",
+    description: "Build With AI, Flutter Lagos.",
+    href: "https://x.com/chiziaruhoma/status/1948703061137915924",
+    external: true,
+  },
+  {
+    year: "2022",
+    label: "DevFest Lagos",
+    description: "Speaker.",
+  },
+  {
     year: "2021",
     label: "Flutter Architecture with Riverpod",
+    description: "DevFest Lagos.",
     href: "https://www.youtube.com/watch?v=yNwUj9Xnxpw",
+    external: true,
+  },
+  {
+    year: "2020",
+    label: "DevFest Lagos",
+    description: "First big-audience talk.",
+  },
+];
+
+const writing: Item[] = [
+  {
+    year: "2025",
+    label: "Building an MCP in Rust",
+    href: "https://chiziaruhoma.substack.com/p/building-an-mcp-in-rust",
+    external: true,
+  },
+  {
+    year: "2025",
+    label: "Why I'm Betting on Rust and AI",
+    href: "https://chiziaruhoma.substack.com/p/why-im-betting-on-rust-and-ai",
+    external: true,
+  },
+  {
+    year: "2025",
+    label: "Job Hunting in Nigeria: A Harsh Reality",
+    href: "https://chiziaruhoma.substack.com/p/job-hunting-in-nigeria-a-harsh-reality-c32cb2be4017",
+    external: true,
+  },
+  {
+    year: "2024",
+    label: "Flutter Mobile Security: 5 easy steps to secure your app",
+    href: "https://chiziaruhoma.substack.com/p/flutter-mobile-security-5-easy-steps-to-secure-your-app-5d16cfa898b9",
+    external: true,
+  },
+  {
+    year: "2023",
+    label: "Building a Chrome Extension with Flutter",
+    href: "https://chiziaruhoma.substack.com/p/building-a-chrome-extension-with-flutter-751e0674df09",
+    external: true,
+  },
+  {
+    year: "2023",
+    label: "Building a Tweet Screenshot API with Dart Frog & Puppeteer",
+    href: "https://chiziaruhoma.substack.com/p/building-a-tweet-screenshot-api-with-dart-frog-puppeteer-7e8da301dd32",
+    external: true,
+  },
+  {
+    year: "2022",
+    label: "Flutter Web3: Smart Contract Interaction in Dart",
+    href: "https://chiziaruhoma.substack.com/p/flutter-web3-smart-contract-interaction-in-dart-5669595a0068",
+    external: true,
+  },
+  {
+    year: "2022",
+    label: "Flutter Web3: Working with the Ethereum Name Service",
+    href: "https://chiziaruhoma.substack.com/p/flutter-web3-working-with-the-ethereum-name-service-4fc2d8cfb3f",
+    external: true,
+  },
+  {
+    year: "2021",
+    label: "Flutter IoT Series: Interfacing a 16X2 LCD with WeMos D1-R1",
+    href: "https://chiziaruhoma.substack.com/p/flutter-iot-series-interfacing-a-16x2-lcd-with-wemos-d1-r1-7e16b1e7e9c0",
+    external: true,
+  },
+  {
+    year: "2021",
+    label: "Baby Steps to Becoming Senior",
+    href: "https://chiziaruhoma.substack.com/p/baby-steps-to-becoming-senior-158de706a2a0",
+    external: true,
+  },
+  {
+    year: "2021",
+    label: "Top CI/CD providers for Flutter",
+    href: "https://chiziaruhoma.substack.com/p/top-ci-cd-providers-for-flutter-e47445a3cfa3",
+    external: true,
+  },
+  {
+    year: "2020",
+    label: "Beyond UI: Flutter + Socket.io: Real-time Communication",
+    href: "https://chiziaruhoma.substack.com/p/beyond-ui-flutter-socket-io-real-time-communication-35301d9c60cd",
     external: true,
   },
 ];
@@ -295,6 +389,12 @@ export default function Home() {
 
           <Section label="Said">
             {talks.map((item) => (
+              <YearRow key={item.label} item={item} />
+            ))}
+          </Section>
+
+          <Section label="Written">
+            {writing.map((item) => (
               <YearRow key={item.label} item={item} />
             ))}
           </Section>
