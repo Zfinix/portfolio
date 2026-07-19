@@ -1,0 +1,88 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import SiteNav from "@/components/SiteNav.astro";
+import Section from "@/components/Section.astro";
+import YearRow from "@/components/YearRow.astro";
+import { getPosts, formatDate } from "@/lib/posts";
+import { olderWriting } from "@/lib/data";
+
+const allPosts = await getPosts(true);
+const posts = allPosts.filter((p) => !p.data.series || p.data.series.order === 1);
+
+const seriesCounts = new Map<string, number>();
+for (const p of allPosts) {
+  const s = p.data.series;
+  if (s) seriesCounts.set(s.name, (seriesCounts.get(s.name) ?? 0) + 1);
+}
+
+const title = "Blog — Chizi Ogbonda";
+const description = "Notes on AI engineering, Rust, and building developer tools.";
+---
+
+<Layout title={title} description={description}>
+  <div class="min-h-screen bg-white text-black dark:bg-[#0a0a0a] dark:text-[#ededed]">
+    <main class="max-w-3xl mx-auto px-6 md:px-10 py-12 md:py-16">
+      <div class="flex flex-col gap-10">
+        <SiteNav />
+        <div class="flex flex-col gap-4">
+          <h1
+            class="text-black dark:text-neutral-100 font-semibold text-[28px] tracking-[-0.02em]"
+          >
+            Blog
+          </h1>
+          <p class="text-[14px] text-gray-600 dark:text-neutral-400 leading-relaxed max-w-prose">
+            Deep dives on AI engineering, Rust, and the systems that run agents
+            safely in production. The full archive lives on{" "}
+            <a
+              href="https://chiziaruhoma.substack.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="link-underline">Substack</a
+            >.
+          </p>
+        </div>
+
+        <section class="flex flex-col gap-6">
+          {
+            posts.length === 0 && (
+              <p class="text-[13px] text-gray-500 dark:text-neutral-400">Nothing here yet.</p>
+            )
+          }
+          {
+            posts.map((post) => (
+              <a href={`/blog/${post.id}`} class="group flex flex-col gap-1">
+                <div class="flex items-baseline gap-2">
+                  <span class="link-underline text-[15px] font-medium">
+                    {post.data.title}
+                  </span>
+                  {post.data.status === "draft" && (
+                    <span class="text-[10px] uppercase tracking-wide text-gray-400 dark:text-neutral-500 border border-gray-200 dark:border-neutral-800 rounded px-1 py-[1px]">
+                      draft
+                    </span>
+                  )}
+                  {post.data.series && (
+                    <span class="text-[10px] uppercase tracking-wide text-gray-500 dark:text-neutral-400 border border-gray-200 dark:border-neutral-800 rounded px-1 py-[1px]">
+                      {seriesCounts.get(post.data.series.name)}-part series
+                    </span>
+                  )}
+                </div>
+                {post.data.summary && (
+                  <span class="text-[12px] text-gray-600 dark:text-neutral-400 leading-relaxed">
+                    {post.data.summary}
+                  </span>
+                )}
+                <span class="text-[11px] text-gray-400 dark:text-neutral-500 tabular-nums">
+                  {formatDate(post.data.date)}
+                </span>
+              </a>
+            ))
+          }
+        </section>
+
+        <Section label="Older">
+          {olderWriting.map((item) => <YearRow item={item} />)}
+        </Section>
+      </div>
+    </main>
+  </div>
+</Layout>

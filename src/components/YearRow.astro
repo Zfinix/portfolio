@@ -1,0 +1,26 @@
+---
+import type { Item } from "@/lib/types";
+import ItemLink from "./ItemLink.astro";
+
+interface Props {
+  item: Item;
+}
+
+const { item } = Astro.props;
+---
+
+<div class="md:grid md:grid-cols-[1fr_200px] md:gap-12 flex flex-col gap-1">
+  <div class="flex flex-col gap-1 min-w-0">
+    <ItemLink item={item} />
+    {
+      item.description && (
+        <div class="text-gray-600 dark:text-neutral-400 text-[12px] leading-relaxed">
+          {item.description}
+        </div>
+      )
+    }
+  </div>
+  <div class="text-black dark:text-neutral-100 text-[12px] tabular-nums md:pt-[3px]">
+    {item.year}
+  </div>
+</div>

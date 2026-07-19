@@ -1,0 +1,26 @@
+---
+import type { Item } from "@/lib/types";
+import ExternalArrow from "./ExternalArrow.astro";
+
+interface Props {
+  item: Item;
+}
+
+const { item } = Astro.props;
+---
+
+{
+  !item.href ? (
+    <span class="text-[14px]">{item.label}</span>
+  ) : (
+    <a
+      href={item.href}
+      target={item.external ? "_blank" : undefined}
+      rel={item.external ? "noopener noreferrer" : undefined}
+      class="link-underline inline-flex items-baseline w-fit text-[14px]"
+    >
+      <span>{item.label}</span>
+      {item.external && <ExternalArrow />}
+    </a>
+  )
+}

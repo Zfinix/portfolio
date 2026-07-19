@@ -1,0 +1,24 @@
+---
+const email = "chiziaruhoma@gmail.com";
+---
+
+<button
+  type="button"
+  class="text-black dark:text-neutral-100 link-underline text-left relative group w-fit cursor-pointer text-[14px]"
+  title="Click to copy"
+  data-copy-email={email}
+>
+  <span>{email}</span>
+  <span
+    class="absolute left-0 bottom-full mb-2 px-2 py-1 text-xs text-white bg-black dark:text-black dark:bg-white rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap"
+  >
+    Click to copy
+  </span>
+</button>
+
+<script>
+  const btn = document.querySelector<HTMLButtonElement>("[data-copy-email]");
+  btn?.addEventListener("click", () => {
+    navigator.clipboard?.writeText(btn.dataset.copyEmail ?? "");
+  });
+</script>

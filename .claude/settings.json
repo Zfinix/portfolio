@@ -15,7 +15,27 @@
       "Bash(bunx --bun vercel whoami)",
       "Bash(bunx --bun vercel project ls)",
       "Bash(bunx --bun vercel link --project v0-portfolio --yes)",
-      "Bash(bunx --bun vercel --prod --yes)"
+      "Bash(bunx --bun vercel --prod --yes)",
+      "Bash(echo \"=== TSC DONE \\($?\\) ===\")",
+      "Bash(cd /Users/chizi/projects/personal/portfolio *)",
+      "mcp__excalidraw__create_view",
+      "mcp__excalidraw__export_to_excalidraw",
+      "Bash(magick -background none og.svg -resize 1200x630 \"/Users/chizi/projects/personal/portfolio/public/og.png\")",
+      "Bash(magick identify *)",
+      "Bash(rm -rf app lib .vercel .next out)",
+      "Bash(rm -f next.config.js next-env.d.ts postcss.config.mjs tailwind.config.ts eslint.config.mjs components.json package-lock.json tsconfig.tsbuildinfo)",
+      "Bash(grep -vE '^\\(node_modules|\\\\.git\\)$')",
+      "mcp__excalidraw__read_me",
+      "Bash(command -v bun)",
+      "Bash(echo \"bun: $\\(command -v bun\\)\")",
+      "Bash(command -v node)",
+      "Bash(echo \"node: $\\(command -v node\\)\")",
+      "Bash(command -v rsvg-convert)",
+      "Bash(cp __TRACKED_VAR__/heroA.webp src/content/writing/context-harness-loop-engineering.webp)",
+      "Bash(cp __TRACKED_VAR__/heroB.webp src/content/writing/context-harness-loop-engineering-light.webp)"
+    ],
+    "additionalDirectories": [
+      "/Users/chizi/Downloads"
     ]
   }
 }

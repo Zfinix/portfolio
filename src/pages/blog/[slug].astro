@@ -1,0 +1,179 @@
+---
+import { getCollection, render } from "astro:content";
+import { Picture, getImage } from "astro:assets";
+import Layout from "@/layouts/Layout.astro";
+import { formatDate, getSeriesParts } from "@/lib/posts";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("writing");
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const title = `${post.data.title} — Chizi Ogbonda`;
+
+// Small scraper-friendly OG derivative instead of the multi-MB original.
+const ogImage = post.data.hero
+  ? (await getImage({ src: post.data.hero, width: 1200, format: "jpeg" })).src
+  : undefined;
+
+const series = post.data.series;
+const seriesParts = series ? await getSeriesParts(series.name) : [];
+---
+
+<Layout
+  title={title}
+  description={post.data.summary}
+  image={ogImage}
+  type="article"
+  publishedTime={post.data.date || undefined}
+>
+  <div class="min-h-screen bg-white text-black dark:bg-[#0a0a0a] dark:text-[#ededed]">
+    <main class="max-w-3xl mx-auto px-6 md:px-10 py-12 md:py-16">
+      <article class="flex flex-col gap-8">
+        <div class="flex flex-col gap-3">
+          <a href="/blog" class="link-underline w-fit text-[13px] text-gray-500 dark:text-neutral-400"
+            >← Blog</a
+          >
+          <h1
+            class="text-black dark:text-neutral-100 font-semibold text-[30px] md:text-[36px] tracking-[-0.03em] leading-[1.1]"
+          >
+            {post.data.title}
+          </h1>
+          <div class="flex items-center gap-3 text-[12px] text-gray-400 dark:text-neutral-500">
+            <span class="tabular-nums">
+              {
+                formatDate(post.data.date, {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })
+              }
+            </span>
+            {post.data.tags?.map((tag) => <span class="text-gray-500 dark:text-neutral-400">{tag}</span>)}
+          </div>
+          {
+            series && (
+              <div class="text-[12px] text-gray-500 dark:text-neutral-400">
+                {series.name} · Part {series.order} of {seriesParts.length}
+              </div>
+            )
+          }
+        </div>
+
+        {
+          post.data.hero && (
+            <Picture
+              src={post.data.hero}
+              formats={["avif", "webp"]}
+              fallbackFormat="webp"
+              width={768}
+              height={398}
+              densities={[1, 2]}
+              alt=""
+              loading="eager"
+              fetchpriority="high"
+              class="w-full aspect-2/1 object-cover rounded-lg border border-gray-200 dark:border-neutral-800"
+            />
+          )
+        }
+
+        {
+          series && post.data.status === "draft" && (
+            <div class="text-[13px] text-gray-500 dark:text-neutral-400 border-l-2 border-gray-200 dark:border-neutral-800 pl-4 leading-relaxed">
+              This is part of{" "}
+              <strong class="font-medium text-gray-700 dark:text-neutral-200">
+                {series.name}
+              </strong>
+              , a living series I'm writing as I learn in public. It stays in
+              draft on purpose: I update these posts as I go deeper, so expect it
+              to grow and change.
+            </div>
+          )
+        }
+
+        <div class="markdown">
+          <Content />
+        </div>
+
+        {
+          seriesParts.length > 1 && (
+            <nav class="flex flex-col gap-3 border-t border-gray-200 dark:border-neutral-800 pt-8">
+              <span class="text-[11px] uppercase tracking-wide text-gray-400 dark:text-neutral-500">
+                {series?.name} · {seriesParts.length} parts
+              </span>
+              <ol class="flex flex-col gap-2">
+                {seriesParts.map((p, i) => (
+                  <li class="flex items-baseline gap-3 text-[14px]">
+                    <span class="text-gray-400 dark:text-neutral-600 tabular-nums">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    {p.id === post.id ? (
+                      <span class="font-medium text-black dark:text-neutral-100">
+                        {p.data.title}
+                      </span>
+                    ) : (
+                      <a
+                        href={`/blog/${p.id}`}
+                        class="link-underline text-gray-600 dark:text-neutral-300"
+                      >
+                        {p.data.title}
+                      </a>
+                    )}
+                    {p.data.status === "draft" && (
+                      <span class="text-[10px] uppercase tracking-wide text-gray-400 dark:text-neutral-600 border border-gray-200 dark:border-neutral-800 rounded px-1 py-[1px]">
+                        draft
+                      </span>
+                    )}
+                  </li>
+                ))}
+              </ol>
+            </nav>
+          )
+        }
+      </article>
+    </main>
+  </div>
+</Layout>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>(".code-tabs").forEach((group) => {
+    const tabs = group.querySelectorAll<HTMLButtonElement>(".code-tab");
+    const panels = group.querySelectorAll<HTMLElement>(".code-panel");
+    const title = group.querySelector<HTMLElement>(".code-tab-title");
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        const index = tab.dataset.tab;
+        tabs.forEach((t) => {
+          const active = t.dataset.tab === index;
+          t.classList.toggle("is-active", active);
+          t.setAttribute("aria-selected", active ? "true" : "false");
+        });
+        panels.forEach((p) => p.classList.toggle("is-active", p.dataset.panel === index));
+        const activePre = group.querySelector<HTMLElement>(".code-panel.is-active pre");
+        if (title && activePre) title.textContent = activePre.dataset.title ?? "";
+      });
+    });
+  });
+
+  document.querySelectorAll<HTMLButtonElement>(".copy-btn").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const block = btn.closest(".code-block");
+      const pre =
+        block?.querySelector(".code-panel.is-active pre") ?? block?.querySelector("pre");
+      const code = (pre as HTMLElement | null)?.innerText ?? "";
+      if (!code) return;
+      try {
+        await navigator.clipboard.writeText(code.replace(/\n$/, ""));
+        btn.textContent = "Copied";
+        btn.setAttribute("data-copied", "");
+        window.setTimeout(() => {
+          btn.textContent = "Copy";
+          btn.removeAttribute("data-copied");
+        }, 1500);
+      } catch {}
+    });
+  });
+</script>

@@ -1,0 +1,108 @@
+---
+const aliases = ["Chizi", "Chiziaruhoma", "@zfinix"];
+---
+
+<span
+  role="button"
+  tabindex="0"
+  aria-label={aliases[0]}
+  title="Decrypt"
+  class="name-cycle cursor-pointer select-none"
+  data-name-cycle
+  data-aliases={JSON.stringify(aliases)}
+>
+  <span class="name-text draw-underline">{aliases[0]}</span><span
+    class="name-caret"
+    aria-hidden="true"></span>
+</span>
+
+<script>
+  const wrap = document.querySelector<HTMLElement>("[data-name-cycle]");
+  const textEl = wrap?.querySelector<HTMLElement>(".name-text");
+  const caretEl = wrap?.querySelector<HTMLElement>(".name-caret");
+
+  if (wrap && textEl && caretEl) {
+    const aliases: string[] = JSON.parse(wrap.dataset.aliases ?? "[]");
+    // base64-ish key alphabet — reads as a cryptographic key while decrypting
+    const KEY = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const LEAD = 10; // frames before the first character locks
+    const PER_CHAR = 9; // frames between each sequential lock
+
+    let index = 0;
+    let current = "";
+    let frame = 0;
+    let raf = 0;
+    let queue: { to: string; lock: number; char: string }[] = [];
+
+    const rand = () => KEY[Math.floor(Math.random() * KEY.length)];
+
+    const update = () => {
+      let out = "";
+      let done = 0;
+      let head = false;
+      for (const item of queue) {
+        if (frame >= item.lock) {
+          done++;
+          out += item.to;
+        } else {
+          if (!head) {
+            out += '<span class="name-caret name-caret--head"></span>';
+            head = true;
+          }
+          // re-roll the ciphertext glyph every other frame (~30fps churn)
+          if (!item.char || frame % 2 === 0) item.char = rand();
+          out += `<span class="scramble-dim">${item.char}</span>`;
+        }
+      }
+      textEl.innerHTML = out;
+      if (done === queue.length) {
+        caretEl.style.visibility = "";
+        return;
+      }
+      caretEl.style.visibility = "hidden";
+      frame++;
+      raf = requestAnimationFrame(update);
+    };
+
+    const decryptTo = (next: string) => {
+      const from = current;
+      current = next;
+      wrap.setAttribute("aria-label", next);
+      if (reduce) {
+        textEl.textContent = next;
+        caretEl.style.visibility = "";
+        return;
+      }
+      const len = Math.max(from.length, next.length);
+      queue = [];
+      for (let i = 0; i < len; i++) {
+        queue.push({
+          to: next[i] ?? "",
+          lock: LEAD + i * PER_CHAR + Math.floor(Math.random() * 4),
+          char: "",
+        });
+      }
+      cancelAnimationFrame(raf);
+      frame = 0;
+      update();
+    };
+
+    const next = () => {
+      index = (index + 1) % aliases.length;
+      decryptTo(aliases[index]);
+    };
+
+    wrap.addEventListener("click", next);
+    wrap.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        next();
+      }
+    });
+
+    // Decrypt the name in on first paint.
+    decryptTo(aliases[0]);
+  }
+</script>

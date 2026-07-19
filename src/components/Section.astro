@@ -1,0 +1,15 @@
+---
+interface Props {
+  label: string;
+  tight?: boolean;
+}
+
+const { label, tight } = Astro.props;
+---
+
+<section class="flex flex-col gap-4">
+  <h2 class="text-black dark:text-neutral-100 font-semibold text-[16px]">{label}</h2>
+  <div class={`flex flex-col ${tight ? "gap-1" : "gap-4"}`}>
+    <slot />
+  </div>
+</section>

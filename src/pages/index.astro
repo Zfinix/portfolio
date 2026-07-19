@@ -1,0 +1,121 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Section from "@/components/Section.astro";
+import ItemRow from "@/components/ItemRow.astro";
+import YearRow from "@/components/YearRow.astro";
+import ItemLink from "@/components/ItemLink.astro";
+import NameCycle from "@/components/NameCycle.astro";
+import CopyEmail from "@/components/CopyEmail.astro";
+import {
+  currently,
+  work,
+  talks,
+  aiWriting,
+  elsewhere,
+} from "@/lib/data";
+import type { Item } from "@/lib/types";
+import { getPosts, readingMinutes } from "@/lib/posts";
+
+const posts = await getPosts();
+const internalWriting: Item[] = posts.map((post) => ({
+  label: post.data.title,
+  href: `/blog/${post.id}`,
+  external: false,
+  meta: `${readingMinutes(post.body ?? "")} min read`,
+}));
+
+const title = "Chizi Ogbonda";
+const description =
+  "I build AI tools and the apps that put them in front of people. Currently running RaventHQ, doing dev rel at Serverpod, and consulting on Juice.";
+---
+
+<Layout title={title} description={description}>
+  <div class="min-h-screen bg-white text-black dark:bg-[#0a0a0a] dark:text-[#ededed]">
+    <hr class="max-w-3xl mx-auto border-gray-200 dark:border-neutral-800" />
+
+    <main class="max-w-3xl mx-auto px-6 md:px-10 py-12 md:py-16">
+      <div class="flex flex-col gap-16">
+        <div
+          class="md:grid md:grid-cols-[1fr_200px] md:gap-12 flex flex-col gap-12"
+        >
+          <section class="flex flex-col gap-7">
+            <div>
+              <div class="text-[14px] text-gray-500 dark:text-neutral-400 leading-none mb-3">I&apos;m</div>
+              <div
+                class="text-[40px] md:text-[56px] font-light tracking-[-0.03em] leading-none"
+              >
+                <NameCycle />
+              </div>
+            </div>
+            <div
+              class="flex flex-col gap-4 max-w-prose text-[14px] leading-[1.65]"
+            >
+              <p>
+                I build AI systems and the infrastructure that runs them safely:
+                agents, MCP servers, and sandboxes that execute untrusted code in
+                isolation. Primarily Rust and TypeScript today, with React Native
+                and Expo on the client, after years of Flutter and Dart.
+              </p>
+              <p>
+                <a
+                  href="https://instalog.dev"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="link-underline">Aster</a
+                >{" "}is the clearest example, an AI code reviewer that runs
+                untrusted analysis in ephemeral Docker containers on
+                infrastructure I built and operate.
+              </p>
+              <p>
+                Ten years shipping production software across fintech, consumer
+                apps, and Web3, on founding teams and solo. I take ambiguous
+                product ideas and deliver them end to end, from native client to
+                backend to deploy.
+              </p>
+              <p>
+                I also reverse engineer apps, contribute to open source, and
+                publish technical writing and conference talks.
+              </p>
+            </div>
+          </section>
+
+          <aside class="md:pt-3">
+            <Section label="Now">
+              {currently.map((item) => <ItemRow item={item} />)}
+            </Section>
+          </aside>
+        </div>
+
+        <Section label="Built">
+          {work.map((item) => <YearRow item={item} />)}
+        </Section>
+
+        <Section label="Said">
+          {talks.map((item) => <YearRow item={item} />)}
+        </Section>
+
+        <Section label="Blog">
+          {internalWriting.map((item) => <YearRow item={item} />)}
+          {aiWriting.map((item) => <YearRow item={item} />)}
+          <a
+            href="/blog"
+            class="link-underline w-fit text-[13px] text-gray-500 dark:text-neutral-400 mt-1"
+            >All posts →</a
+          >
+        </Section>
+
+        <Section label="Find me" tight>
+          {elsewhere.map((item) => <ItemLink item={item} />)}
+          <CopyEmail />
+        </Section>
+      </div>
+    </main>
+
+    <footer
+      class="max-w-3xl mx-auto px-6 md:px-10 pb-10 pt-6 border-t border-gray-200 dark:border-neutral-800 text-gray-400 dark:text-neutral-500 text-[12px] flex justify-between"
+    >
+      <span>© Chizi Ogbonda</span>
+      <span>Last updated 2026</span>
+    </footer>
+  </div>
+</Layout>

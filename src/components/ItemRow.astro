@@ -1,0 +1,21 @@
+---
+import type { Item } from "@/lib/types";
+import ItemLink from "./ItemLink.astro";
+
+interface Props {
+  item: Item;
+}
+
+const { item } = Astro.props;
+---
+
+<div class="flex flex-col gap-1">
+  <ItemLink item={item} />
+  {
+    item.description && (
+      <div class="text-gray-600 dark:text-neutral-400 text-[12px] leading-relaxed">
+        {item.description}
+      </div>
+    )
+  }
+</div>
