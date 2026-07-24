@@ -98,6 +98,8 @@ const seriesParts = series ? await getSeriesParts(series.name) : [];
           <Content />
         </div>
 
+        <div id="read-sentinel" aria-hidden="true"></div>
+
         {
           seriesParts.length > 1 && (
             <nav class="flex flex-col gap-3 border-t border-gray-200 dark:border-neutral-800 pt-8">
@@ -157,6 +159,32 @@ const seriesParts = series ? await getSeriesParts(series.name) : [];
       });
     });
   });
+
+  // Read tracking: when the reader reaches the end of the article, fire a
+  // one-time virtual pageview to `?read`. The Cloudflare Web Analytics beacon
+  // (SPA mode) picks up the pushState and records it, so reads show up in the
+  // dashboard as hits to `/blog/<slug>?read` — filter by that to count reads.
+  const sentinel = document.getElementById("read-sentinel");
+  if (sentinel) {
+    const key = `read:${location.pathname}`;
+    const markRead = () => {
+      if (sessionStorage.getItem(key)) return;
+      sessionStorage.setItem(key, "1");
+      const url = new URL(location.href);
+      url.searchParams.set("read", "1");
+      history.pushState(history.state, "", url);
+    };
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          markRead();
+          observer.disconnect();
+          break;
+        }
+      }
+    });
+    observer.observe(sentinel);
+  }
 
   document.querySelectorAll<HTMLButtonElement>(".copy-btn").forEach((btn) => {
     btn.addEventListener("click", async () => {
