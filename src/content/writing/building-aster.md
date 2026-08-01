@@ -6,7 +6,7 @@ tags: ["AI", "Agents", "Engineering", "Rust"]
 status: "published"
 ---
 
-I thought building a coding agent meant writing a very good prompt and wiring it to a model. Then I built [Aster](https://github.com/zfinix/aster), and the repo now has fifteen crates. One of them talks to the model. The other fourteen exist to control what the model sees and to check what it says.
+I thought building a coding agent meant writing a very good prompt and wiring it to a model. Then I started building [Aster](https://github.com/zfinix/aster), and the repo now has fifteen crates. One of them talks to the model. The other fourteen exist to control what the model sees and to check what it says.
 
 That ratio is the honest summary of everything I learned. Every lesson below reduces to the same move: give the model less, and make it prove more.
 
