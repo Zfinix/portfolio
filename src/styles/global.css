@@ -213,19 +213,38 @@
   border-radius: 8px;
 }
 
+/* Tables use the same chart form as the figure panels: mono uppercase head,
+   hairline rules, no vertical borders, tabular numerals. */
 .markdown table {
-  width: 100%;
+  width: max-content;
+  min-width: 100%;
   border-collapse: collapse;
-  font-size: 13px;
+  font-size: 13.5px;
+  font-variant-numeric: tabular-nums;
   display: block;
   overflow-x: auto;
 }
 
-.markdown th,
-.markdown td {
-  border: 1px solid var(--md-border);
-  padding: 6px 10px;
+.markdown th {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--md-title);
   text-align: left;
+  padding: 0 14px 8px 0;
+  border-bottom: 1px solid var(--md-fg);
+}
+
+.markdown td {
+  padding: 8.5px 14px 8.5px 0;
+  border-bottom: 1px solid var(--md-border);
+  vertical-align: baseline;
+}
+
+.markdown tr:last-child td {
+  border-bottom: 1px solid var(--md-fg);
 }
 
 .markdown :not(pre) > code {
@@ -434,4 +453,220 @@ html.dark .markdown pre span {
 html.dark .markdown .mermaid svg {
   --bg: #17181c !important;
   --fg: #e6e6e6 !important;
+}
+
+/* Figure panels: the chart form from the Asterdroid write-up. */
+.markdown figure {
+  margin: 2.6em 0 2.8em;
+}
+
+.markdown .figure-panel {
+  --fig-ink: var(--md-fg);
+  --fig-ink-2: var(--md-muted);
+  --fig-ink-3: var(--md-title);
+  --fig-hair: var(--md-border);
+  --fig-accent: #1c5cab;
+  border-top: 1px solid var(--md-border);
+  padding: 20px 0 0;
+  margin: 0 0 8px;
+}
+
+html.dark .markdown .figure-panel {
+  --fig-accent: #6da7ec;
+}
+
+.markdown .figure-panel .panel-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.markdown .figure-panel .fig-no {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--fig-accent);
+  white-space: nowrap;
+}
+
+.markdown .figure-panel .fig-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--md-fg);
+}
+
+.markdown .figure-panel .panel-sub {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  color: var(--fig-ink-3);
+  margin-bottom: 18px;
+}
+
+.markdown figcaption.cap {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--md-muted);
+  max-width: 660px;
+  margin: 10px 2px 0;
+}
+
+.markdown figcaption.cap b {
+  font-weight: 640;
+  color: var(--md-fg);
+}
+
+.markdown .flow {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.markdown .flow .node {
+  fill: url(#fig-dots);
+  stroke: var(--fig-ink);
+  stroke-width: 1.6;
+}
+
+.markdown .flow .node-a {
+  fill: url(#fig-dots-a);
+  stroke: var(--fig-accent);
+  stroke-width: 1.8;
+}
+
+.markdown .flow .group {
+  fill: url(#fig-dots);
+  stroke: var(--fig-ink-3);
+  stroke-width: 1.4;
+}
+
+.markdown .flow .edge {
+  fill: none;
+  stroke: var(--fig-ink);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+
+.markdown .flow .edge-a {
+  fill: none;
+  stroke: var(--fig-accent);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+
+.markdown .flow text {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+.markdown .flow .n-name {
+  font-size: 13px;
+  font-weight: 500;
+  fill: var(--fig-ink);
+}
+
+.markdown .flow .n-name-a {
+  font-size: 13px;
+  font-weight: 500;
+  fill: var(--fig-accent);
+}
+
+.markdown .flow .n-sub {
+  font-size: 10.5px;
+  fill: var(--fig-ink-3);
+}
+
+.markdown .flow .e-label {
+  font-size: 11px;
+  fill: var(--fig-ink-2);
+}
+
+.markdown .flow .e-label-a {
+  font-size: 11px;
+  fill: var(--fig-accent);
+}
+
+.markdown .flow .g-title {
+  font-size: 14px;
+  font-weight: 620;
+  fill: var(--fig-ink);
+}
+
+.markdown .flow .grid {
+  stroke: var(--fig-hair);
+  stroke-width: 1;
+}
+
+.markdown .flow .bar {
+  fill: var(--fig-ink);
+  opacity: 0.8;
+}
+
+.markdown .flow .bar-a {
+  fill: var(--fig-accent);
+}
+
+.markdown .flow .bar-range {
+  fill: var(--fig-ink);
+  opacity: 0.32;
+}
+
+.markdown .flow .axis {
+  font-size: 10.5px;
+  fill: var(--fig-ink-3);
+}
+
+.markdown .flow .v-label {
+  font-size: 11px;
+  fill: var(--fig-ink-2);
+}
+
+.markdown .flow .v-label-a {
+  font-size: 11px;
+  font-weight: 500;
+  fill: var(--fig-accent);
+}
+
+.markdown .flow .bracket {
+  fill: none;
+  stroke: var(--fig-ink-3);
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+}
+
+.markdown .flow .bracket-label {
+  font-size: 11px;
+  fill: var(--fig-ink-2);
+}
+
+/* Stat row: the same chart form, for a handful of numbers. */
+.markdown .statrow {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px 28px;
+  border-top: 1px solid var(--md-border);
+  padding-top: 18px;
+  margin: 2.4em 0 2.6em;
+}
+
+.markdown .stat {
+  min-width: 0;
+}
+
+.markdown .stat .v {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--md-fg);
+}
+
+.markdown .stat .l {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  letter-spacing: 0.03em;
+  color: var(--md-title);
+  margin-top: 3px;
 }
