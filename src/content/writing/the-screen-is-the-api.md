@@ -3,7 +3,7 @@ title: "The Screen Is the API"
 date: "2026-09-12"
 summary: "Asterdroid is the same Aster binary running on an Android phone. The hard part was not the model. A phone has no shell, so the screen is the only interface, and an agent that cannot prove an action landed is just guessing."
 tags: ["AI", "Agents", "Android", "Aster", "Engineering"]
-status: "draft"
+status: "published"
 ---
 
 You cannot ask the settings app to turn on Wi-Fi.
