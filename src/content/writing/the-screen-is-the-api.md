@@ -340,9 +340,9 @@ The honest list, because a post that only lists wins is a brochure.
 **Type into a terminal.** `text` reaches normal text fields, including ones that refuse the usual accessibility text action. It cannot reach a view that handles its own
 input and never opens an input connection, and a terminal is the common case. There it reports posted while nothing arrives.
 
-**See a canvas.** Maps exposes the whole map as a single element with nothing inside. The fallback is OCR, which misreads things. Treat what it returns as a reading rather than a fact, and cross-check it when the task depends on it.
+**Trust a canvas reading.** On a map the whole canvas is one element with nothing inside, so the tree gives nothing. The vision verbs from earlier are the workaround, and they are readings, not facts: OCR misreads, and a blob is a guess from colour. Good enough to aim a pool cue. Not good enough to trust where the number matters, so cross-check when the task depends on it.
 
-**Reach the lock screen.** The screen must be unlocked for taps to reach apps. The mirror will happily show and tap the lock screen to no effect.
+**Get past a secure lock.** A swipe keyguard is not a problem: when a viewer joins, the mirror brings it down itself. A PIN, pattern, or fingerprint is the one lock that needs a human. Taps behind it never land, the service says so instead of pretending, and locking the phone ends the projection.
 
 **Wake the phone from cold.** Every verb starts by waking the screen, because a phone left on a desk is off by default. That is a wake lock, not a boot. The app declares `RECEIVE_BOOT_COMPLETED` and does not yet use it, so a reboot means opening the app once before the agent is reachable again.
 
